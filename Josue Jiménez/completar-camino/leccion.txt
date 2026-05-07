@@ -1,0 +1,73 @@
+=== [ENTIDAD: PROFESOR] ===
+ID_PROFESOR: 001
+NOMBRE_COMPLETO: Jesús Arellano Pimentel
+
+=== [ENTIDAD: LECCIÓN] ===
+ID_LECCION: L-001
+TITULO: Potres y cocina típica
+TEMA: Gastronomía mexicana
+
+--- [RELACIÓN: INCORPORA -> CONTENIDO MULTIMEDIA] ---
+CONTENIDO_1: pag25.png | Tipo: Imagen | Ruta: contenido/pag25.png
+CONTENIDO_2: pag26.png | Tipo: Imagen | Ruta: contenido/pag26.png
+CONTENIDO_3: video1.mp4 | Tipo: Video | Ruta: contenido/video1.mp4
+CONTENIDO_4: archivo1.pdf | Tipo: PDF | Ruta: contenido/archivo1.pdf
+CONTENIDO_5: video1-mp4 | Tipo: Video | Ruta: contenido/video1.mp4
+
+=== [ENTIDAD: ACTIVIDAD] ===
+ID_ACTIVIDAD: ACT-001
+NOMBRE_ACTIVIDAD: Cuestionario acerca de la gastronomia juchiteca
+INTENTOS_MAX: 3
+TIEMPO_ESTIMADO: 120 minutos
+
+--- [RELACIÓN: GENERA <- PLANTILLA: COMPLETAR CAMINO] ---
+
+PREGUNTA_1: Sopa a base de pescado
+RESPUESTA: Sopa de pescado
+
+PREGUNTA_2: Sopa a base de maíz
+RESPUESTA: Sopa de maíz
+
+PREGUNTA_3: Sopa que tiene menta
+RESPUESTA: Sopa de menta
+
+PREGUNTA_4: Plato de arroz con mariscos
+RESPUESTA: Paella
+
+PREGUNTA_5: Postre frío con leche y arroz
+RESPUESTA: Arroz con leche
+
+PREGUNTA_6: Bebida hecha con cacao
+RESPUESTA: Chocolate caliente
+
+PREGUNTA_7: Pan dulce tradicional mexicano
+RESPUESTA: Concha
+
+PREGUNTA_8: Platillo con tortilla frita y salsa
+RESPUESTA: Chilaquiles
+
+PREGUNTA_9: Sopa con fideos y caldo de pollo
+RESPUESTA: Sopa de fideo
+
+PREGUNTA_10: Platillo con carne envuelta en tortilla
+RESPUESTA: Taco
+
+PREGUNTA_11: Bebida caliente con canela y arroz
+RESPUESTA: Atole
+
+PREGUNTA_12: Postre de gelatina con leche
+RESPUESTA: Gelatina de leche
+
+PREGUNTA_13: Carne cocida en su jugo
+RESPUESTA: Carne en su jugo
+
+PREGUNTA_14: Platillo con huevo y tortilla frita
+RESPUESTA: Huevos rancheros
+
+PREGUNTA_15: Sopa espesa de verduras
+RESPUESTA: Crema de verduras
+
+
+
+=== [CONFIGURACIÓN DE CALIFICACIÓN] ===
+DESCRIPCION: Actividad evaluativa sobre la unidad de hardware y cultura local.

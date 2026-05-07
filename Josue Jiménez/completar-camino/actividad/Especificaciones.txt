@@ -1,0 +1,5 @@
+-- Josué Jiménez Fermín --
+
+Debido a las políticas de GitHub respecto al almacenamiento hemos decidido no subir los archivos a los que el programa hace referencia; sin embargo, dichos archivos pueden encontrarse dentro de esta liga de Google Drive:
+
+https://drive.google.com/drive/folders/1Y1le-j2NvJlAyKfvYr4bs9FbpnqrzliZ?usp=sharing
