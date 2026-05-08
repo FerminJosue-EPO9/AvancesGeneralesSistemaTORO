@@ -1,0 +1,82 @@
+=== [ENTIDAD: PROFESOR] ===
+ID_PROFESOR: 102
+NOMBRE_COMPLETO: Guadalupe Toledo Toledo
+
+=== [ENTIDAD: LECCIÓN] ===
+ID_LECCION: L-002
+TITULO: Introducción al RUP y Diagramas de Secuencia
+TEMA: Rational Unified Process (RUP)
+
+--- [RELACIÓN: INCORPORA -> CONTENIDO MULTIMEDIA] ---
+
+CONTENIDO_1: RUP.pdf | Tipo: PDF | Ruta: ./RUP.pdf
+CONTENIDO_2: RUP-P3.jpeg | Tipo: Imagen | Ruta: ./RUP-P3.jpeg
+CONTENIDO_3: RUP-P4.jpeg | Tipo: Imagen | Ruta: ./RUP-P4.jpeg
+CONTENIDO_4: Diagramas de secuenciasB.mp4 | Tipo: Video | Ruta: ./Diagramas de secuenciasB.mp4
+CONTENIDO_5: El-RUP.mp3 | Tipo: Audio | Ruta: ./El-RUP.mp3
+
+=== [ENTIDAD: ACTIVIDAD] ===
+ID_ACTIVIDAD: ACT-1234
+NOMBRE_ACTIVIDAD: Actividad de Verdadero o Falso sobre RUP
+TIPO_ACTIVIDAD: VERDADERO_FALSO
+
+INTENTOS_MAX: 3
+TIEMPO_ESTIMADO: 30 minutos
+
+--- [RELACIÓN: GENERA <- PLANTILLA: VERDADERO O FALSO] ---
+
+PREGUNTA_1:
+ENUNCIADO: RUP significa Rational Unified Process.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_2:
+ENUNCIADO: RUP es una metodología de desarrollo de software.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_3:
+ENUNCIADO: RUP divide el desarrollo en fases.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_4:
+ENUNCIADO: La fase de Inicio pertenece a RUP.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_5:
+ENUNCIADO: RUP no utiliza UML.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Falso
+
+PREGUNTA_6:
+ENUNCIADO: La fase de Construcción desarrolla el sistema.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_7:
+ENUNCIADO: RUP promueve el desarrollo iterativo.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_8:
+ENUNCIADO: La fase de Transición entrega el sistema al usuario final.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_9:
+ENUNCIADO: RUP solo sirve para videojuegos.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Falso
+
+PREGUNTA_10:
+ENUNCIADO: RUP ayuda a organizar proyectos de software.
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+=== [CONFIGURACIÓN DE CALIFICACIÓN] ===
+
+METODO_CALCULO: AUTOMATICO
+DESCRIPCION:
+Actividad evaluativa de verdadero o falso sobre el modelo RUP y diagramas de secuencia.
