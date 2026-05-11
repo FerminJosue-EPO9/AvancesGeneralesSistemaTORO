@@ -1,0 +1,494 @@
+/* Estilos para las Pestañas */
+/* Contenedor de las pestañas */
+@font-face {
+    font-family: 'Inder';
+    /* La ruta sube un nivel (..) para salir de css y entra a fonts */
+    src: url('../fonts/Inder-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* =========================================
+   ESTRUCTURA GENERAL
+   ========================================= */
+body {
+    font-family: 'Inder', sans-serif;
+    /* ... resto de tu css ... */
+}
+.tabs-container {
+    background: #ffffff;
+    display: flex;
+    width: 100%;
+    gap: 1px; /* Espacio entre las pestañas */
+}
+/* Estilo de cada pestaña (como un bloque independiente) */
+.tab-btn {
+    background: #D9D9D9; 
+    --gris-fondo: #f8f9fa; /* Fondo semi-transparente por defecto */
+    padding: 30px 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000000;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    flex: 1; /* Ocupa el espacio disponible equitativamente */
+    
+}
+
+
+/* Contenedor principal del encabezado */
+.contenido-header {
+    display: flex;
+    justify-content: center; 
+    position: relative;
+    background:#ffffff;
+    border-radius: 8px;
+}
+.tab-btn:hover {
+    background: rgb(255, 255, 255);
+    transform: translateY(-2px);
+}
+
+/* Estado Activo: El "rectángulo" resaltado */
+.tab-btn.active {
+    background: linear-gradient(180deg, #161C5F 0%, #203982 56%, #045FC8 100%);
+    color: #fff;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Control de visibilidad */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* El botón ahora se posiciona de forma absoluta o ajustada */
+/* El botón abajo a la derecha */
+.header-actions {
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+}
+
+/* Tu CSS anterior de .lecciones-grid, .leccion-card, etc., se mantiene igual debajo */
+
+
+.btn-toro-outline {
+    background-color: var(--verde-oficial);
+    color: white;
+    padding: 15px 25px; /* Un poco más grande para que sea fácil de clicar */
+    border-radius: 50px; /* Bordes más redondos (estilo píldora) quedan mejor en botones flotantes */
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    
+    /* --- AQUÍ ESTÁ LA MAGIA --- */
+    position: fixed;    /* Lo fija a la pantalla */
+    bottom: 40px;       /* Distancia desde abajo */
+    right: 40px;        /* Distancia desde la derecha */
+    z-index: 1000;      /* Asegura que esté siempre encima de todo */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para dar efecto de elevación */
+}
+
+/* Efecto al pasar el mouse */
+.btn-toro-outline:hover {
+    transform: translateY(-5px) scale(1.05); /* Se eleva un poco */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background-color: #2e7d32; /* Un verde un poco más oscuro si quieres */
+}
+
+.empty-state{
+    text-align: center;
+    padding: 40px;
+    border-radius: 8px;
+    color: #666;
+}
+
+.empty-state p{
+    color: black;
+    padding-bottom: 10px;
+}
+
+.lecciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.leccion-card {
+    position: relative; 
+    background: #ffffff;
+    border-radius: 15px; /* Tu redondeado */
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    
+    /* LA SOLUCIÓN MÁGICA:  */
+    overflow: hidden; 
+    
+    /* Asegúrate de tener un borde o sombra para que se note el corte */
+    border: 1px solid #eee; 
+}
+
+/* Ajuste opcional para que el fondo gris de abajo se vea mejor */
+.leccion-actions {
+    background: #ffffff;
+    padding: 15px 20px;
+    border-top: 1px solid #ffffff;
+    text-align: right;
+    /* Ya no necesita border-radius aquí porque el padre lo corta */
+}
+
+.leccion-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Sección principal de la tarjeta */
+.card-main {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    
+    /* SOLUCIÓN:  */
+    flex: 1; 
+}
+/* Icono de la lección */
+.leccion-icon-bg {
+    background: linear-gradient(135deg, #161C5F, #045FC8);
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.card-icon {
+    width: 35px;
+    height: 35px;
+    filter: brightness(0) invert(1); /* Hace el icono blanco si es oscuro */
+}
+
+/* Texto de la lección */
+.leccion-info {
+    padding-right: 60px; /* Suficiente espacio para que el texto no toque los botones */
+}
+.leccion-info h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #161C5F;
+    line-height: 1.3;
+}
+
+.leccion-info p {
+    margin: 5px 0 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Botón de acción dentro de la tarjeta */
+
+
+.btn-toro {
+    background-color: #161C5F;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-toro:hover {
+    background-color: #045FC8;
+}
+
+.empty-state {
+    grid-column: 1 / -1; /* Ocupa todo el ancho */
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.card-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    opacity: 0; /* Ocultos por defecto para que se vea limpio */
+    transition: opacity 0.3s ease;
+}
+.leccion-card:hover .card-controls {
+    opacity: 1;
+}
+
+/* Estilo específico para Borrar (Rojo) */
+.delete-btn {
+    color: #e74c3c;
+}
+.delete-btn:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+/* Estilo específico para Editar (Azul/Gris) */
+.edit-btn {
+    color: #2c3e50;
+    font-size: 14px;
+    
+}
+.edit-btn:hover {
+    background: #3498db;
+    color: white;
+}
+
+/* Contenedor de los iconos en la esquina */
+.card-actions-top {
+    position: absolute;
+    top: 15px;   /* Un poco más de margen */
+    right: 15px;
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+    opacity: 0;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9); /* Fondo ligero para que no se pierdan */
+    padding: 5px;
+    border-radius: 8px;
+}
+
+/* Efecto al aparecer: un ligero movimiento para que no se vea estático */
+.leccion-card:hover .card-actions-top {
+    opacity: 1;
+    transform: translateY(0);
+}
+.leccion-card .card-actions-top {
+    transform: translateY(-5px); /* Inicia un poco arriba */
+}
+/* Estilo para los botones de enlace de los iconos */
+.action-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.action-icon-btn:hover {
+    transform: scale(1.2); /* Efecto de agrandado al pasar el mouse */
+}
+
+/* Tamaño de tus iconos PNG */
+.icon-small {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* Aseguramos que la tarjeta permita el posicionamiento absoluto */
+
+/* Nuevo contenedor para Lecciones (Lista vertical de filas largas) */
+.lecciones-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    max-width: 95%; /* Ajustado para que sea ancho como la imagen 1 */
+    margin: 0 auto;
+}
+
+/* Tarjeta Horizontal de Lección */
+.leccion-card-horizontal {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 15px 25px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.leccion-card-horizontal:hover {
+    transform: translateX(5px); /* Se mueve un poco a la derecha al pasar el mouse */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* El icono de la izquierda */
+.leccion-card-horizontal .leccion-icon-bg {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #161C5F, #045FC8);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+/* Info central: Crece para empujar las acciones a la derecha */
+.leccion-card-horizontal .leccion-info {
+    flex-grow: 1;
+}
+
+.leccion-card-horizontal .leccion-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #161C5F;
+}
+
+/* Acciones a la derecha */
+.leccion-card-horizontal .leccion-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Tinte rojo para el icono de borrar en lecciones también */
+.delete-tint {
+    filter: invert(35%) sepia(91%) saturate(5437%) hue-rotate(344deg) brightness(96%) contrast(93%);
+}
+
+/********************************/
+/********************************/
+/****CSS DE LAS ACTIVIDADES******/
+/********************************/
+/********************************/
+
+/* Contenedor lista */
+.actividades-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 80%; 
+    /* CAMBIO AQUÍ: */
+    margin: 30px 0 0 0; /* Arriba: 30px, Derecha: 0, Abajo: 0, Izquierda: 0 */
+    /* Si no quieres que esté pegado totalmente al borde izquierdo, añade un padding o margin-left pequeño: */
+    /* margin-left: 20px; */
+}
+/* Tarjeta Horizontal */
+.activity-card-horizontal {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    background: white;
+    border-radius: 15px; /* Bordes redondeados como la imagen */
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.activity-card-horizontal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Imagen izquierda (con fondo o imagen completa) */
+.act-img-container {
+    width: 100px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.act-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto hace que la imagen llene el espacio sin deformarse */
+}
+
+/* Info Central */
+.act-info {
+    flex-grow: 1; /* Ocupa todo el espacio disponible */
+}
+
+.act-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.act-info .tipo {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #161C5F; /* Azul Orión */
+    font-weight: 600;
+}
+
+.act-info .fecha {
+    margin: 2px 0 0 0;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Acciones Derecha */
+.act-actions {
+    display: flex;
+    gap: 10px;
+    padding-left: 15px;
+}
+
+/* Tinte rojo para el icono de borrar (opcional si tu png es negro) */
+.delete-tint {
+    filter: invert(35%) sepia(91%) saturate(5437%) hue-rotate(344deg) brightness(96%) contrast(93%);
+}
+
+.help-box {
+    background-color: #e3f2fd; /* Azul muy clarito */
+    border-left: 5px solid #2196F3; /* Borde azul fuerte a la izquierda */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.help-title {
+    font-weight: bold;
+    color: #0d47a1;
+    margin-top: 0;
+}
+
+.code-example {
+    background-color: #fff;
+    border: 1px dashed #999;
+    padding: 5px 10px;
+    color: #d32f2f; /* Rojo para resaltar el formato */
+    margin: 5px 0;
+    display: inline-block;
+}
+
+.warning-text {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 0;
+    font-style: italic;
+}
+

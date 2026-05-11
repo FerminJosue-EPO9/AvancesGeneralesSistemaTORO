@@ -1,0 +1,9 @@
+ID_PLANTILLA: P003
+NOMBRE: Copas
+LECCION: A_Matemáticas_1_Introducción_Nombre1_ejemplo
+INTENTOS: 3
+TIEMPO: 5 minutos
+TOTAL_PREGUNTAS: 1
+INSTRUCCIONES: Sin instrucciones específicas.
+---
+Hola amigo|Te invito una copa|Lo siento|Ya no bebo|Bien entonces un cafe|Te invito una copa

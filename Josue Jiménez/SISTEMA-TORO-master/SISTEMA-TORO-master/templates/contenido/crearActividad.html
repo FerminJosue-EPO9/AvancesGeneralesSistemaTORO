@@ -1,0 +1,777 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='crear-actividad.css') }}">
+
+<style>
+    /* ===== ESTILOS GENERALES Y DE OPCIÓN MÚLTIPLE ===== */
+    .question-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .q-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .q-number {
+        font-weight: bold;
+        color: #052672;
+    }
+
+    .btn-delete {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.2s;
+    }
+
+    .btn-delete:hover {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+
+    .btn-add-question {
+        width: 100%;
+        padding: 12px;
+        background: #eef2f7;
+        border: 2px dashed #052672;
+        color: #052672;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 8px;
+        margin-top: 15px;
+    }
+
+    .btn-add-question:hover {
+        background: #e0e7ff;
+    }
+
+    .opt-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .q-input {
+        font-size: 1.05rem;
+        font-weight: 500;
+    }
+
+    /* ===== FORMULARIO COMPLETAR CAMINO (tabla palabra/pregunta) ===== */
+    .tabla-palabra-pregunta {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 10px;
+    }
+
+    .tabla-header {
+        display: grid;
+        grid-template-columns: 1fr 2fr 40px;
+        font-weight: bold;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+        color: #052672;
+    }
+
+    .fila-palabra-pregunta {
+        display: grid;
+        grid-template-columns: 1fr 2fr 40px;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .fila-palabra-pregunta input {
+        width: 100%;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .btn-eliminar-fila {
+        background-color: #dc3545;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: background 0.2s;
+        line-height: 1;
+    }
+
+    .btn-eliminar-fila:hover {
+        background-color: #c82333;
+    }
+
+    #agregar-fila-camino {
+        background-color: #28a745 !important;
+        border: none !important;
+        color: white !important;
+        font-weight: bold;
+        transition: background 0.2s;
+    }
+
+    #agregar-fila-camino:hover {
+        background-color: #218838 !important;
+    }
+
+    #agregar-fila-camino:disabled {
+        background-color: #6c757d !important;
+        cursor: not-allowed;
+    }
+
+    /* ===== PASO 3: MÉTRICAS (diseño horizontal) ===== */
+    .metrics-container {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .metrics-container .form-group {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .metrics-container .form-group label {
+        font-weight: 600;
+        color: #1e293b;
+        width: 180px;
+        margin-bottom: 0;
+        text-align: right;
+    }
+
+    .metrics-container .form-group .input-toro,
+    .metrics-container .form-group input {
+        flex: 1;
+        min-width: 200px;
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 0.95rem;
+    }
+</style>
+
+<div class="contenedor-creacAct">
+    <div class="header-center">
+        <h3>CREAR ACTIVIDAD</h3>
+    </div>
+
+    <div class="stepper-wrapper">
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress"></div>
+        </div>
+        <div class="stepper">
+            <div class="step active">
+                <div class="circle">1</div>
+                <p>Plantilla</p>
+            </div>
+            <div class="step">
+                <div class="circle">2</div>
+                <p>Configurar</p>
+            </div>
+            <div class="step">
+                <div class="circle">3</div>
+                <p>Métricas</p>
+            </div>
+            <div class="step">
+                <div class="circle">4</div>
+                <p>Finalizar</p>
+            </div>
+        </div>
+    </div>
+
+    <form id="wizard-form" action="{{ url_for('crear_actividad') }}" method="POST">
+        <div class="step-content-container" id="content">
+            <!-- PASO 1: PLANTILLA -->
+            <div class="step-pane active" id="step-1">
+                <h4 class="step-title">Selecciona el tipo de actividad</h4>
+                <input type="hidden" name="plantilla_seleccionada" id="input_plantilla" required>
+                <div class="cards-grid" id="main-options">
+                    <div class="plantilla-card group-card" onclick="mostrarSubOpciones('quiz')">
+                        <img src="{{ url_for('static', filename='img/imagenesActividades/CUESTIONARIOS.png') }}"
+                            alt="Cuestionarios">
+                        <div class="card-overlay"><span>Cuestionarios</span></div>
+                    </div>
+                    <div class="plantilla-card disabled">
+                        <img src="{{ url_for('static', filename='img/imagenesActividades/CRUCIGRAMA.png') }}"
+                            alt="Crucigrama">
+                        <div class="card-overlay"><span>Crucigrama</span></div>
+                    </div>
+                    <div class="plantilla-card disabled">
+                        <img src="{{ url_for('static', filename='img/imagenesActividades/SOPA.png') }}" alt="Sopa">
+                        <div class="card-overlay"><span>Sopa de Letras</span></div>
+                    </div>
+                    <div class="plantilla-card" onclick="seleccionarCamino(this)">
+                        <img src="{{ url_for('static', filename='img/imagenesActividades/COMPLETARCAMINO.png') }}"
+                            alt="Completar camino">
+                        <div class="card-overlay"><span>Completar camino</span></div>
+                    </div>
+                    <div class="plantilla-card disabled">
+                        <img src="{{ url_for('static', filename='img/imagenesActividades/COMPLETARPALABRA.png') }}"
+                            alt="Completar palabra">
+                        <div class="card-overlay"><span>Completar palabra</span></div>
+                    </div>
+                </div>
+                <div id="sub-options-quiz" class="sub-options-container" style="display: none;">
+                    <h3 style="text-align:center; color:#161C5F; margin: 20px 0;">¿Qué tipo de cuestionario?</h3>
+                    <div class="cards-grid">
+                        <div class="plantilla-card disabled">
+                            <img src="{{ url_for('static', filename='img/imagenesActividades/FV.png') }}" alt="FV">
+                            <div class="card-overlay"><span>Falso / Verdadero</span></div>
+                        </div>
+                        <div class="plantilla-card" onclick="seleccionarFinal('P003', this)">
+                            <img src="{{ url_for('static', filename='img/imagenesActividades/OPCIONES.png') }}"
+                                alt="Opciones">
+                            <div class="card-overlay"><span>Opción Múltiple</span></div>
+                        </div>
+                    </div>
+                </div>
+                <p id="error-msg" style="color: red; display: none; text-align: center; margin-top:15px;">Por favor
+                    selecciona una actividad.</p>
+            </div>
+
+            <!-- PASO 2: CONFIGURAR -->
+            <div class="step-pane" id="step-2">
+                <h4 class="step-title">Configurar Actividad</h4>
+                <div id="leccion-selector-container" class="form-group"
+                    style="background: #eef2f7; padding: 15px; border-radius: 8px; border-left: 4px solid #161C5F;">
+                    <label style="font-weight: bold; color: #161C5F;">📂 Vincular a Lección:</label>
+                    <select name="leccion_padre" class="input-toro" required>
+                        <option value="" disabled selected>-- Selecciona la lección --</option>
+                        {% for leccion in lecciones %}
+                        <option value="{{ leccion }}">{{ leccion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <hr style="margin: 20px 0;">
+                <div id="quiz-form-container">
+                    <div id="questions-container"></div>
+                    <button type="button" class="btn-add-question" onclick="addQuestion()">+ Agregar Pregunta</button>
+                </div>
+                <div id="camino-form-container" style="display: none;">
+                    <div class="tabla-palabra-pregunta">
+                        <div class="tabla-header">
+                            <div class="col-palabra">Palabra</div>
+                            <div class="col-pregunta">Descripción</div>
+                            <div class="col-accion"></div>
+                        </div>
+                        <div id="camino-items-list"></div>
+                        <button type="button" class="btn-add-question" id="agregar-fila-camino"
+                            onclick="agregarFilaCamino()">
+                            + Agregar pregunta (Máx. 15)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASO 3: MÉTRICAS -->
+            <div class="step-pane" id="step-3">
+                <h4 class="step-title">Configuración de Métricas</h4>
+                <div class="metrics-container">
+                    <div class="form-group">
+                        <label>Título de la actividad:</label>
+                        <input type="text" name="nombre_confirmacion" class="input-toro"
+                            placeholder="Ej: Conocimientos básicos" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de vencimiento:</label>
+                        <input type="date" name="fecha_vencimiento" class="input-toro" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tiempo límite (minutos):</label>
+                        <input type="number" name="tiempo_limite" class="input-toro" min="1" max="120"
+                            placeholder="Ej: 60">
+                    </div>
+                    <div class="form-group">
+                        <label>Intentos máximos:</label>
+                        <input type="number" name="intentos" id="intentos-input" class="input-toro" min="1" max="5"
+                            value="3" placeholder="Ej: 3" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ponderación en puntos:</label>
+                        <input type="number" name="ponderacion" class="input-toro" min="1" max="100"
+                            placeholder="Ej: 10" required>
+                    </div>
+                    <input type="hidden" name="instrucciones" value="Sin instrucciones adicionales.">
+                </div>
+            </div>
+
+            <!-- PASO 4: RESUMEN -->
+            <div class="step-pane" id="step-4">
+                <h4 class="step-title">Resumen de la Actividad</h4>
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <h5>¡Actividad lista!</h5>
+                    </div>
+                    <div class="summary-details">
+                        <div class="summary-item"><span class="label">Tipo:</span> <span class="value"
+                                id="summary-type">---</span></div>
+                        <div class="summary-item"><span class="label">Nombre:</span> <span class="value"
+                                id="summary-name">---</span></div>
+                        <div class="summary-item"><span class="label">Preguntas:</span> <span class="value"
+                                id="summary-questions">0</span></div>
+                        <div class="summary-item"><span class="label">Intentos:</span> <span class="value"
+                                id="summary-attempts">---</span></div>
+                        <div class="summary-item"><span class="label">Tiempo:</span> <span class="value"
+                                id="summary-time">---</span></div>
+                        <div class="summary-item"><span class="label">Fecha vencimiento:</span> <span class="value"
+                                id="summary-fecha">---</span></div>
+                        <div class="summary-item"><span class="label">Ponderación:</span> <span class="value"
+                                id="summary-ponderacion">---</span></div>
+                    </div>
+                    <p class="summary-note">Al hacer clic en "Guardar", la actividad se generará en formato TXT.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <button type="button" class="btn-wizard prev" id="btn-prev" onclick="prevStep()">Regresar</button>
+            <button type="button" class="btn-wizard next" id="btn-next" onclick="nextStep()">Siguiente</button>
+            <button type="submit" class="btn-wizard finish" id="btn-finish" style="display:none;">Guardar</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // ==========================================
+    // VARIABLES GLOBALES
+    // ==========================================
+    let currentStep = 1;
+    const totalSteps = 4;
+    let isSubMenuOpen = false;
+    let questionCount = 0;      // para opción múltiple
+    let filaCaminoCount = 0;
+    const MAX_FILAS_CAMINO = 15;
+
+    const mainOptions = document.getElementById('main-options');
+    const subOptions = document.getElementById('sub-options-quiz');
+    const inputPlantilla = document.getElementById('input_plantilla');
+    const title = document.querySelector('.step-title');
+    const errorMsg = document.getElementById('error-msg');
+    const progressBar = document.getElementById('progress');
+
+    // ==========================================
+    // GENERACIÓN DEL ARCHIVO .txt (Completar Camino)
+    // ==========================================
+    function generarTxtActividad() {
+        // Validar que sea el tipo 'Completar camino'
+        if (inputPlantilla.value !== 'C001') {
+            alert("Por ahora solo se exporta 'Completar camino'.");
+            return false;
+        }
+
+        // 1. Obtener las filas de palabra/pregunta
+        const filas = document.querySelectorAll('#camino-items-list .fila-palabra-pregunta');
+        if (filas.length === 0) {
+            alert("No hay datos para exportar.");
+            return false;
+        }
+
+        // Arreglos para izquierda (preguntas) y derecha (palabras)
+        const izquierda = [];
+        const derecha = [];
+        const respuestas = {};
+
+        filas.forEach(fila => {
+            const preguntaInput = fila.querySelector('input[name^="camino_pregunta_"]');
+            const palabraInput = fila.querySelector('input[name^="camino_palabra_"]');
+            if (preguntaInput && palabraInput) {
+                const pregunta = preguntaInput.value.trim();
+                const palabra = palabraInput.value.trim();
+                if (pregunta && palabra) {
+                    izquierda.push(pregunta);
+                    derecha.push(palabra);
+                    respuestas[pregunta] = palabra;
+                }
+            }
+        });
+
+        // 2. Obtener métricas
+        const nombre = document.querySelector('input[name="nombre_confirmacion"]').value.trim() || "Sin título";
+        const intentos = document.querySelector('input[name="intentos"]').value || "3";
+        const tiempo = document.querySelector('input[name="tiempo_limite"]').value || "";
+        const fecha = document.querySelector('input[name="fecha_vencimiento"]').value || "No definida";
+        const ponderacion = document.querySelector('input[name="ponderacion"]').value || "0";
+
+        // 3. Construir el contenido del archivo
+        let contenido = "";
+
+        // Sección izquierda
+        contenido += "const izquierda = [\n";
+        izquierda.forEach(p => contenido += `            "${p}",\n`);
+        contenido = contenido.slice(0, -2) + "\n        ];\n\n";
+
+        // Sección derecha
+        contenido += "const derecha = [\n";
+        derecha.forEach(p => contenido += `            "${p}",\n`);
+        contenido = contenido.slice(0, -2) + "\n        ];\n\n";
+
+        // Sección respuestas
+        contenido += "const respuestas = {\n";
+        for (const [pregunta, palabra] of Object.entries(respuestas)) {
+            contenido += `            "${pregunta}": "${palabra}",\n`;
+        }
+        contenido = contenido.slice(0, -2) + "\n        };\n\n";
+
+        // Separador y métricas
+        contenido += "@@@ Métricas: \n";
+        contenido += `tipo:completar-camino\n`;
+        contenido += `nombre:${nombre}\n`;
+        contenido += `intentos:${intentos}\n`;
+        if (tiempo) contenido += `tiempo:${tiempo}\n`;
+        contenido += `fecha-vencimiento:${fecha}\n`;
+        contenido += `ponderacion:${ponderacion}\n`;
+
+        // 4. Descargar archivo .txt
+        const blob = new Blob([contenido], { type: "text/plain" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `actividad_${nombre.replace(/\s+/g, "_")}.txt`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        return true;
+    }
+
+    // ==========================================
+    // FORMULARIO COMPLETAR CAMINO (tabla palabra/pregunta)
+    // ==========================================
+    function agregarFilaCamino() {
+        if (filaCaminoCount >= MAX_FILAS_CAMINO) {
+            alert(`Máximo ${MAX_FILAS_CAMINO} preguntas permitidas.`);
+            return;
+        }
+        filaCaminoCount++;
+        const container = document.getElementById('camino-items-list');
+        const filaId = `camino-fila-${filaCaminoCount}`;
+        const html = `
+            <div class="fila-palabra-pregunta" id="${filaId}">
+                <input type="text" name="camino_palabra_${filaCaminoCount}" placeholder="Ej: ESP-32" required>
+                <input type="text" name="camino_pregunta_${filaCaminoCount}" placeholder="Ej: Placa de desarrollo con módulo WiFi" required>
+                <button type="button" class="btn-eliminar-fila" onclick="eliminarFilaCamino('${filaId}')">✖</button>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+        actualizarContadorFilas();
+    }
+
+    function eliminarFilaCamino(filaId) {
+        const filas = document.querySelectorAll('#camino-items-list .fila-palabra-pregunta');
+        if (filas.length <= 5) {
+            alert(`Debe haber al menos 5 palabras/preguntas. No se puede eliminar más. (Actual: ${filas.length})`);
+            return;
+        }
+        const fila = document.getElementById(filaId);
+        if (fila) {
+            fila.remove();
+            renumerarFilasCamino();
+        }
+    }
+
+    function renumerarFilasCamino() {
+        const filas = document.querySelectorAll('#camino-items-list .fila-palabra-pregunta');
+        filaCaminoCount = filas.length;
+        filas.forEach((fila, idx) => {
+            const nuevoNumero = idx + 1;
+            const palabraInput = fila.querySelector('input[name^="camino_palabra_"]');
+            const preguntaInput = fila.querySelector('input[name^="camino_pregunta_"]');
+            if (palabraInput) palabraInput.name = `camino_palabra_${nuevoNumero}`;
+            if (preguntaInput) preguntaInput.name = `camino_pregunta_${nuevoNumero}`;
+            fila.id = `camino-fila-${nuevoNumero}`;
+        });
+        actualizarContadorFilas();
+    }
+
+    function actualizarContadorFilas() {
+        const boton = document.getElementById('agregar-fila-camino');
+        if (boton) {
+            boton.innerText = `+ Agregar pregunta (${filaCaminoCount}/${MAX_FILAS_CAMINO})`;
+            boton.disabled = (filaCaminoCount >= MAX_FILAS_CAMINO);
+        }
+    }
+
+    function inicializarFormularioCamino() {
+        const container = document.getElementById('camino-items-list');
+        if (container) container.innerHTML = '';
+        filaCaminoCount = 0;
+        for (let i = 0; i < 5; i++) agregarFilaCamino();
+    }
+
+    // ==========================================
+    // NAVEGACIÓN DEL WIZARD
+    // ==========================================
+    function seleccionarCamino(elemento) {
+        inputPlantilla.value = 'C001';
+        document.querySelectorAll('.plantilla-card').forEach(c => c.classList.remove('selected'));
+        elemento.classList.add('selected');
+        errorMsg.style.display = 'none';
+    }
+
+    function mostrarSubOpciones(tipo) {
+        if (tipo === 'quiz') {
+            mainOptions.style.display = 'none';
+            subOptions.style.display = 'block';
+            title.innerText = 'Selecciona el formato del cuestionario';
+            inputPlantilla.value = "";
+            subOptions.style.opacity = 0;
+            setTimeout(() => subOptions.style.opacity = 1, 50);
+            isSubMenuOpen = true;
+        }
+    }
+
+    function resetSelection() {
+        mainOptions.style.display = 'flex';
+        subOptions.style.display = 'none';
+        inputPlantilla.value = "";
+        title.innerText = 'Selecciona el tipo de actividad';
+        document.querySelectorAll('.plantilla-card').forEach(c => c.classList.remove('selected'));
+        errorMsg.style.display = 'none';
+        isSubMenuOpen = false;
+    }
+
+    function seleccionarFinal(id, elemento) {
+        inputPlantilla.value = id;
+        document.querySelectorAll('.plantilla-card').forEach(c => c.classList.remove('selected'));
+        elemento.classList.add('selected');
+        errorMsg.style.display = 'none';
+    }
+
+    function updateUI() {
+        document.querySelectorAll('.step-pane').forEach(pane => pane.classList.remove('active'));
+        document.getElementById('step-' + currentStep).classList.add('active');
+
+        document.querySelectorAll('.step').forEach((stepElem, index) => {
+            if (index < currentStep) stepElem.classList.add('active');
+            else stepElem.classList.remove('active');
+        });
+
+        progressBar.style.width = ((currentStep - 1) / (totalSteps - 1)) * 100 + '%';
+
+        if (currentStep === 4) {
+            document.getElementById('summary-name').innerText = document.querySelector('input[name="nombre_confirmacion"]').value || "Sin título";
+            const tipos = { 'P003': 'Opción Múltiple', 'C001': 'Completar camino' };
+            document.getElementById('summary-type').innerText = tipos[inputPlantilla.value] || "No seleccionado";
+
+            let totalItems = (inputPlantilla.value === 'C001')
+                ? document.querySelectorAll('#camino-items-list .fila-palabra-pregunta').length
+                : document.querySelectorAll('.question-card').length;
+            document.getElementById('summary-questions').innerText = totalItems;
+
+            document.getElementById('summary-attempts').innerText = document.querySelector('input[name="intentos"]').value;
+            document.getElementById('summary-time').innerText = (() => {
+                const t = document.querySelector('input[name="tiempo_limite"]').value;
+                return t ? t + " min" : "Sin límite";
+            })();
+            document.getElementById('summary-fecha').innerText = document.querySelector('input[name="fecha_vencimiento"]').value || "No definida";
+            document.getElementById('summary-ponderacion').innerText = document.querySelector('input[name="ponderacion"]').value || "No definida";
+        }
+
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnFinish = document.getElementById('btn-finish');
+        btnPrev.disabled = false;
+        if (currentStep === totalSteps) {
+            btnNext.style.display = 'none';
+            btnFinish.style.display = 'inline-block';
+        } else {
+            btnNext.style.display = 'inline-block';
+            btnFinish.style.display = 'none';
+        }
+    }
+
+    function nextStep() {
+        if (currentStep === 1 && !inputPlantilla.value) {
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        if (currentStep === 1 && inputPlantilla.value) {
+            const leccionSelector = document.getElementById('leccion-selector-container');
+            if (inputPlantilla.value === 'C001') {
+                leccionSelector.style.display = 'none';
+                document.getElementById('quiz-form-container').style.display = 'none';
+                document.getElementById('camino-form-container').style.display = 'block';
+                if (document.querySelectorAll('#camino-items-list .fila-palabra-pregunta').length === 0)
+                    inicializarFormularioCamino();
+            } else {
+                leccionSelector.style.display = 'block';
+                document.getElementById('quiz-form-container').style.display = 'block';
+                document.getElementById('camino-form-container').style.display = 'none';
+                if (document.querySelectorAll('.question-card').length === 0) addQuestion();
+            }
+        }
+
+        if (currentStep === 2) {
+            if (inputPlantilla.value !== 'C001') {
+                if (!document.querySelector('select[name="leccion_padre"]').value) {
+                    alert("Selecciona una lección.");
+                    return;
+                }
+            } else {
+                const filas = document.querySelectorAll('#camino-items-list .fila-palabra-pregunta');
+                if (filas.length < 5) {
+                    alert(`Debes agregar al menos 5 palabras/preguntas. Actualmente tienes ${filas.length}.`);
+                    return;
+                }
+                if (filas.length > MAX_FILAS_CAMINO) {
+                    alert(`Máximo ${MAX_FILAS_CAMINO} preguntas permitidas.`);
+                    return;
+                }
+                let vacia = false, primera = null;
+                filas.forEach((fila, idx) => {
+                    const palabra = fila.querySelector('input[name^="camino_palabra_"]').value.trim();
+                    const pregunta = fila.querySelector('input[name^="camino_pregunta_"]').value.trim();
+                    if (!palabra || !pregunta) {
+                        vacia = true;
+                        if (primera === null) primera = idx + 1;
+                    }
+                });
+                if (vacia) {
+                    alert(`Por favor completa todos los campos de Palabra y Pregunta. Faltan datos en la fila ${primera}.`);
+                    return;
+                }
+            }
+        }
+
+        if (currentStep === 3) {
+            const titulo = document.querySelector('input[name="nombre_confirmacion"]').value.trim();
+            const fecha = document.querySelector('input[name="fecha_vencimiento"]').value;
+            const intentos = document.querySelector('input[name="intentos"]').value;
+            const ponderacion = document.querySelector('input[name="ponderacion"]').value;
+            if (!titulo) { alert("Escribe un título para la actividad."); return; }
+            if (!fecha) { alert("Selecciona una fecha de vencimiento."); return; }
+            if (!intentos || intentos < 1 || intentos > 5) { alert("Los intentos máximos deben ser un número entre 1 y 5."); return; }
+            if (!ponderacion || ponderacion < 1 || ponderacion > 100) { alert("La ponderación debe ser un número entre 1 y 100 puntos."); return; }
+            const tiempo = document.querySelector('input[name="tiempo_limite"]').value;
+            if (tiempo && (tiempo < 1 || tiempo > 120)) { alert("El tiempo límite, si se ingresa, debe estar entre 1 y 120 minutos."); return; }
+        }
+
+        if (currentStep < totalSteps) {
+            currentStep++;
+            updateUI();
+        }
+    }
+
+    function prevStep() {
+        if (currentStep === 1 && isSubMenuOpen) {
+            resetSelection();
+            return;
+        }
+        if (currentStep === 1 && !isSubMenuOpen) {
+            window.location.href = "{{ url_for('vista_contenido') }}";
+            return;
+        }
+        if (currentStep > 1) {
+            currentStep--;
+            updateUI();
+        }
+    }
+
+    // ==========================================
+    // LÓGICA DE PREGUNTAS (OPCIÓN MÚLTIPLE)
+    // ==========================================
+    function addQuestion() {
+        questionCount++;
+        const container = document.getElementById('questions-container');
+        const html = `
+        <div class="question-card" id="q-card-${questionCount}">
+            <div class="q-header">
+                <span class="q-number">Pregunta ${questionCount}</span>
+                <button type="button" class="btn-delete" onclick="eliminarPregunta(this)" title="Eliminar pregunta">
+                    <img src="{{ url_for('static', filename='img/cerrar_boton.png') }}" alt="X" style="width: 20px; height: 20px;">
+                </button>
+            </div>
+            <div class="form-group">
+                <input type="text" name="q_${questionCount}_text" class="input-toro q-input" placeholder="Escribe el enunciado de la pregunta..." required>
+            </div>
+            <div class="options-grid">
+                <div class="opt-row">
+                    <input type="radio" name="q_${questionCount}_correct" value="A" checked title="Respuesta Correcta">
+                    <input type="text" name="q_${questionCount}_optA" class="input-toro" placeholder="Opción A" required>
+                </div>
+                <div class="opt-row">
+                    <input type="radio" name="q_${questionCount}_correct" value="B" title="Respuesta Correcta">
+                    <input type="text" name="q_${questionCount}_optB" class="input-toro" placeholder="Opción B" required>
+                </div>
+                <div class="opt-row">
+                    <input type="radio" name="q_${questionCount}_correct" value="C" title="Respuesta Correcta">
+                    <input type="text" name="q_${questionCount}_optC" class="input-toro" placeholder="Opción C" required>
+                </div>
+                <div class="opt-row">
+                    <input type="radio" name="q_${questionCount}_correct" value="D" title="Respuesta Correcta">
+                    <input type="text" name="q_${questionCount}_optD" class="input-toro" placeholder="Opción D" required>
+                </div>
+            </div>
+        </div>`;
+        container.insertAdjacentHTML('beforeend', html);
+        renumerarPreguntas();
+    }
+
+    function eliminarPregunta(boton) {
+        if (document.querySelectorAll('.question-card').length <= 1) {
+            alert("Debe haber al menos una pregunta.");
+            return;
+        }
+        boton.closest('.question-card').remove();
+        renumerarPreguntas();
+    }
+
+    function renumerarPreguntas() {
+        document.querySelectorAll('.question-card').forEach((tarjeta, index) => {
+            const titulo = tarjeta.querySelector('.q-number');
+            if (titulo) titulo.innerText = `Pregunta ${index + 1}`;
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+    addQuestion();               // Primera pregunta para opción múltiple
+    updateUI();
+
+    // Asignar eventos a los botones de navegación
+    document.getElementById('btn-next').onclick = nextStep;
+    document.getElementById('btn-prev').onclick = prevStep;
+
+    // Interceptar el envío del formulario para generar el TXT
+    const form = document.getElementById('wizard-form');
+      form.noValidate = true;
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();  // Evita el envío tradicional al servidor
+        if (currentStep === totalSteps) {
+            generarTxtActividad();
+        } else {
+            alert("Aún no has llegado al paso final.");
+        }
+    });
+});
+</script>
+{% endblock %}

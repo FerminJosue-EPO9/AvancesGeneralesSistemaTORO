@@ -1,0 +1,46 @@
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/global.css') }}">
+    <title>SISTEMA T.O.R.O.</title> 
+    <link rel="icon" href="{{ url_for('static', filename='img/logo_cbta.png') }}" type="image/png">
+    <body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='img/logo_cbta_blanco.png') }}" class="logo-sidebar">
+                <p>¡Bienvenido,<br><strong>{{ session.get('profesor', 'Profesor') }}</strong>!</p>
+            </div>
+            
+           <nav class="menu">
+                <a href="{{ url_for('vista_contenido') }}" 
+                class="menu-item {{ 'active' if active_page == 'contenido' else '' }}">
+                    <img src="{{ url_for('static', filename='img/contenido.png') }}" class="menu-icon">
+                    Contenido
+                </a>
+                
+                <a href="{{ url_for('vista_grupos') }}" 
+                class="menu-item {{ 'active' if active_page == 'grupos' else '' }}">
+                    <img src="{{ url_for('static', filename='img/grupo.png') }}" class="menu-icon">
+                    Grupos
+                </a>
+                
+                <a href="{{ url_for('vista_calificaciones') }}" 
+                class="menu-item {{ 'active' if active_page == 'calificaciones' else '' }}">
+                    <img src="{{ url_for('static', filename='img/calificaciones.png') }}" class="menu-icon">
+                    Calificaciones
+                </a>
+                
+                <a href="{{ url_for('vista_estadisticas') }}" 
+                class="menu-item {{ 'active' if active_page == 'estadisticas' else '' }}">
+                    <img src="{{ url_for('static', filename='img/estadisticas.png') }}" class="menu-icon">
+                    Estadísticas
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

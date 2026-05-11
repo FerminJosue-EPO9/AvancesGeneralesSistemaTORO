@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='progresiones.css') }}">
+
+<div class="progresiones-shell">
+
+    <div class="shell-header">
+        <div class="titles">
+            <h2>Progresiones</h2>
+            <nav id="breadcrumb-dinamico" class="breadcrumb-component" aria-label="breadcrumb">
+                <a href="{{ url_for('vista_calificaciones') }}">Grupos</a>
+                <span> > </span>
+                <a href="#" id="bcGrupo" class="link-azul">...</a>
+                <span> > </span>
+                <span id="bcParcial" class="texto-gris">...</span>
+            </nav>
+        </div>
+    </div>
+
+    <div class="main-content-2">
+        
+        <div id="estadoVacio" class="empty-state" style="display: none;">
+            <div class="empty-icon">📂</div>
+            <p>No existen progresiones en este parcial.</p>
+            <small>¡Crea la primera para comenzar!</small>
+        </div>
+
+        <div id="contenedorProgresiones" class="chips-wrapper">
+            </div>
+
+        <button id="botonCrear" class="btn-flotante">
+            + Nueva Progresión
+        </button>
+
+    </div>
+
+    <div id="modalProgresion" class="modal hidden">
+        <div class="modal-content">
+            <h3 class="modal-title">Crear Progresión</h3>
+            
+            <div class="form-group">
+                <label>Número:</label>
+                <input type="number" id="inputNumero" min="1" placeholder="Ej: 1">
+            </div>
+
+            <div class="form-group">
+                <label>Tema / Descripción:</label>
+                <input type="text" id="inputTema" placeholder="Ej: Introducción a la IA">
+            </div>
+
+            <div class="modal-actions">
+                <button id="botonCancelar" class="btn-cancel">Cancelar</button>
+                <button id="botonGuardar" class="btn-confirm">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="modalAsignarLeccion" class="modal hidden">
+        <div class="modal-content">
+            <h3 class="modal-title">Asignar Lección</h3>
+            <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">
+                Selecciona una actividad del banco para agregarla a esta progresión.
+            </p>
+            
+            <div class="form-group">
+                <label>Lección Disponible:</label>
+                <select id="selectLeccion" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+                    <option value="">Cargando lecciones...</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button id="btnCancelarAsig" class="btn-cancel">Cancelar</button>
+                <button id="btnConfirmarAsig" class="btn-confirm">Asignar</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="{{ url_for('static', filename='js/grupos.js') }}"></script>
+<script src="{{ url_for('static', filename='js/progresiones.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+=== [ENTIDAD: PROFESOR] ===
+ID_PROFESOR: 101
+NOMBRE_COMPLETO: Profesor T.O.R.O.
+
+=== [ENTIDAD: LECCIÓN] ===
+ID_LECCION: Copas
+TITULO: A_Matemáticas_1_Introducción_Nombre1_ejemplo
+TEMA: General
+
+--- [RELACIÓN: INCORPORA -> CONTENIDO MULTIMEDIA] ---
+CONTENIDO_1: estandar.jpg | Tipo: Imagen | Ruta: ./assets/estandar.jpg
+
+=== [ENTIDAD: ACTIVIDAD] ===
+ID_ACTIVIDAD: ACT-3879303486333672805
+NOMBRE_ACTIVIDAD: Copas
+INTENTOS_MAX: 3
+TIEMPO_ESTIMADO: 5 minutos
+
+--- [RELACIÓN: GENERA <- PLANTILLA: OPCIÓN MÚLTIPLE] ---
+PREGUNTA_1: Hola amigo
+OPCIONES: a) Te invito una copa, b) Lo siento, c) Ya no bebo, d) Bien entonces un cafe
+RESPUESTA: a

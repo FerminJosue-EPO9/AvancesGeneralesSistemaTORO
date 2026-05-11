@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='contenido_crear_leccion.css') }}">
+
+<div class="card">
+    <h1>Crear nueva lección</h1>
+
+    <form action="{{ url_for('subir_leccion') }}" method="POST" enctype="multipart/form-data" id="formLeccion">
+        
+        <div class="content-wrapper">
+            
+            <div class="data-zone" style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+                <h3>1. Configuración de la Lección</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label>Grupo:</label>
+                        <select name="grupo" required class="input-toro">
+                            <option value="" disabled selected>Selecciona un grupo</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Materia:</label>
+                        <select name="materia" required class="input-toro">
+                            <option value="" disabled selected>Selecciona materia</option>
+                            <option value="Matemáticas">Matemáticas</option>
+                            <option value="Español">Español</option>
+                            <option value="Historia">Historia</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Parcial:</label><br>
+                        <select name="parcial" class="input-toro">
+                            <option value="1">Parcial 1</option>
+                            <option value="2">Parcial 2</option>
+                            <option value="3">Parcial 3</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Tema:</label><br>
+                        <select name="tema" required class="input-toro">
+                            <option value="" disabled selected>Selecciona tema</option>
+                            <option value="Introducción">Introducción</option>
+                            <option value="Ejercicios">Ejercicios</option>
+                            <option value="Evaluación">Evaluación</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <label>Nombre de la Actividad:</label>
+                    <input type="text" name="actividad" required class="input-toro" style="width: 100%;" placeholder="Ej: Ecuaciones de primer grado">
+                </div>
+            </div>
+
+            <div class="upload-zone" id="drop-zone">
+                <div class="cloud-icon">☁️</div>
+                <h3>
+                    Por favor, seleccione sus archivos (PDF, video, audio e imágenes)<br>
+                    desde su almacenamiento.<br>
+                    <small>Por favor, presione la tecla Ctrl mientras selecciona un nuevo documento.</small>
+                </h3>
+
+                <button type="button" id="btnSeleccionar" class="btn-primary">Buscar archivos</button>
+                
+                <input type="file" name="archivos" id="inputArchivo" style="display: none;" multiple onchange="mostrarArchivos(this)">
+            </div>
+
+            <div class="status-zone">
+                <h2>Archivos seleccionados</h2>
+                
+                <ul id="listaArchivos" style="list-style: none; padding: 0; margin-top: 10px; color: #555;">
+                    <li class="empty-state-text">No hay archivos seleccionados todavía</li>
+                </ul>
+
+                <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top:10px;">
+                    <strong>Total archivos:</strong> <span id="contador">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-actions">
+            <a href="{{ url_for('vista_contenido') }}" class="btn-secondary" style="text-decoration: none; display:inline-block; text-align:center; padding: 10px 20px;">Regresar</a>
+            
+            <button type="submit" id="btnContinuar" disabled class="btn-primary">Guardar lección</button>
+        </div>
+
+        <p class="footer-note">Asegúrate de llenar todos los campos antes de guardar.</p>
+    </form>
+</div>
+
+<script>
+    
+    const btnSeleccionar = document.getElementById('btnSeleccionar');
+    const inputArchivo = document.getElementById('inputArchivo');
+    const listaArchivos = document.getElementById('listaArchivos');
+    const contador = document.getElementById('contador');
+    const btnContinuar = document.getElementById('btnContinuar');
+
+    btnSeleccionar.addEventListener('click', () => {
+        inputArchivo.click();
+    });
+
+    function mostrarArchivos(input) {
+        const archivos = input.files;
+        listaArchivos.innerHTML = '';
+
+        if (archivos.length > 0) {
+            btnContinuar.disabled = false;
+            btnContinuar.style.opacity = "1";
+            btnContinuar.style.cursor = "pointer";
+
+            for (let i = 0; i < archivos.length; i++) {
+                const li = document.createElement('li');
+                li.style.padding = "5px 0";
+                li.style.borderBottom = "1px solid #eee";
+                li.innerHTML = `📄 <strong>${archivos[i].name}</strong> <small>(${(archivos[i].size / 1024 / 1024).toFixed(2)} MB)</small>`;
+                listaArchivos.appendChild(li);
+            }
+            contador.innerText = archivos.length;
+        } else {
+            listaArchivos.innerHTML = '<li class="empty-state-text">Ningún archivo seleccionado todavía :(</li>';
+            contador.innerText = '0';
+            btnContinuar.disabled = true;
+        }
+    }
+    
+</script>
+{% endblock %}

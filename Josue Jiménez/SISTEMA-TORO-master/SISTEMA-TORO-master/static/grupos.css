@@ -1,0 +1,459 @@
+/* =========================================
+   1. CONFIGURACIÓN GENERAL Y FUENTES
+   ========================================= */
+:root {
+    --color-primary: #052672;      /* Azul Orión */
+    --color-primary-dark: #031b52;
+    --color-secondary: #2B8837;    /* Verde Acción */
+    --color-secondary-hover: #1e6326;
+    --color-bg: #F4F7FE;           /* Fondo gris dashboard */
+    --color-text: #333333;
+    --color-text-light: #666666;
+    --color-white: #ffffff;
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+}
+@font-face {
+    font-family: 'Inder';
+    /* La ruta sube un nivel (..) para salir de css y entra a fonts */
+    src: url('../fonts/Inder-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* =========================================
+   ESTRUCTURA GENERAL
+   ========================================= */
+body {
+    font-family: 'Inder', sans-serif;
+    /* ... resto de tu css ... */
+}
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================
+   2. CONTENEDORES Y SECCIONES
+   ========================================= */
+.seccion {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+.seccion.activa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    opacity: 1;
+    box-sizing: border-box;
+}
+
+h2 {
+    color: var(--color-primary);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   3. SECCIÓN DEFAULT (INSTRUCCIONES)
+   ========================================= */
+#seccionDefault {
+    text-align: center;
+}
+
+#seccionDefault p {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin-bottom: 10px;
+}
+
+.ejemplo-txt {
+    background-color: var(--color-white);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    border-left: 5px solid var(--color-primary);
+    text-align: left;
+    margin-top: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #444;
+    max-width: 600px;
+    width: 100%;
+}
+
+.ejemplo-txt p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 2px;
+}
+
+#primer-grupo {
+    margin-top: 40px;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(5, 38, 114, 0.3);
+    transition: all 0.3s ease;
+}
+
+#primer-grupo:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   4. FORMULARIO (NUEVO GRUPO)
+   ========================================= */
+.contenedor-nuevo-grupo {
+    background-color: var(--color-white);
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    text-align: left;
+    border: 1px solid #e0e0e0;
+}
+
+.contenedor-nuevo-grupo h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.contenedor-nuevo-grupo p {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-primary);
+}
+
+/* Inputs generales */
+#grupo, 
+#archivoAlumnos {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 25px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+#grupo:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(5, 38, 114, 0.1);
+}
+
+/* Estilo especial para input file */
+#archivoAlumnos {
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+#archivoAlumnos::file-selector-button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 15px;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+#archivoAlumnos::file-selector-button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+/* Botones del formulario */
+.botones {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-back, .btn-save {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-back {
+    background-color: transparent;
+    border: 2px solid var(--color-text-light);
+    color: var(--color-text-light);
+}
+
+.btn-back:hover {
+    background-color: #eee;
+    color: #333;
+    border-color: #333;
+}
+
+.btn-save {
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    box-shadow: 0 4px 10px rgba(5, 38, 114, 0.2);
+}
+
+/* =========================================
+   5. LISTA DE GRUPOS (CARDS)
+   ========================================= */
+#listaGrupos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.grupo-card {
+    background: var(--color-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #eee;
+}
+
+.grupo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.grupo-header {
+    background: var(--color-primary);
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nombreGrupo {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.acciones {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.grupo-body {
+    padding: 0;
+    width: 100%;
+}
+
+.contenedor-materia-parcial {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.contenedor-materia-parcial:last-child {
+    border-bottom: none;
+}
+
+.contenedor-materia-parcial:hover {
+    background-color: #fafafa;
+}
+
+.nombreMateria {
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+/* Botones dentro de la lista de materias */
+.btn-materia, .btn-agregarParcial {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.btn-materia {
+    background-color: #e3f2fd;
+    color: var(--color-primary);
+}
+
+.btn-materia:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-agregarParcial {
+    background-color: transparent;
+    border: 1px dashed var(--color-secondary);
+    color: var(--color-secondary);
+}
+
+.btn-agregarParcial:hover {
+    background-color: var(--color-secondary);
+    color: white;
+    border-style: solid;
+}
+
+/* =========================================
+   6. BOTÓN FLOTANTE (+ AGREGAR GRUPO)
+   ========================================= */
+.bnt-agregarGrupo {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--color-secondary);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(43, 136, 55, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bnt-agregarGrupo:hover {
+    background-color: var(--color-secondary-hover);
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(43, 136, 55, 0.5);
+}
+
+/* =========================================
+   7. ESTILOS DE PARCIALES (TIPO ETIQUETA/CHIP)
+   ========================================= */
+
+.parcial-contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-right: 15px;
+    align-items: center;
+    background-color: transparent; /* CORREGIDO: Eliminado el fondo blanco */
+}
+
+/* La cápsula que contiene el texto y la X */
+.parcial-chip {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f0f4f8; /* Gris azulado muy suave */
+    border: 1px solid #d1d9e6;
+    border-radius: 20px;
+    padding: 6px 14px;
+    transition: all 0.2s ease;
+}
+
+.parcial-chip:hover {
+    background-color: #e2e8f0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+}
+
+/* El texto del parcial */
+.parcial-texto {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #334e68;
+    font-weight: 600;
+    margin-right: 8px;
+    padding: 0;
+}
+
+.parcial-texto:hover {
+    color: #052672;
+    text-decoration: underline;
+}
+
+/* LA X ROJA FINA (ESTÁNDAR PARA TODO) */
+.btn-cerrar-rojo {
+    background: none;
+    border: none;
+    color: #e02424; /* Rojo estándar */
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    opacity: 0.6;
+    transition: all 0.2s;
+}
+
+/* Variación blanca para el header del grupo (fondo azul) */
+.grupo-header .btn-cerrar-rojo {
+    color: rgba(255, 255, 255, 0.7); /* Blanco semitransparente */
+}
+.grupo-header .btn-cerrar-rojo:hover {
+    color: #ffffff;
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.btn-cerrar-rojo:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .contenedor-materia-parcial {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .nombreMateria {
+        margin-bottom: 5px;
+    }
+    
+    .seccion.activa {
+        padding: 20px 10px;
+    }
+}
