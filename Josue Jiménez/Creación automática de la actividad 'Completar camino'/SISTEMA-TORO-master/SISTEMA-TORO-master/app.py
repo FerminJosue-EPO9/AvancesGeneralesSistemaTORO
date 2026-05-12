@@ -1,6 +1,12 @@
 from flask import jsonify,Flask, current_app, render_template, request, redirect, url_for, session
+from routes.actividades import actividades_bp 
 import os
+import re
 import shutil
+
+app = Flask(__name__) #SE AGREGÓ LA RUTA DE ACTIVIDADES CON EL OBJETIVO DE IR DESPLAZANDO LA ESTRUCTURA MONOLÍTICA DEL DOCUMENTO
+app.secret_key = 'toro_secret_key_2026' 
+app.register_blueprint(actividades_bp)
 
 # Diccionario para mapear ID de plantilla con su imagen y nombre legible
 CATALOGO_PLANTILLAS = {
@@ -8,55 +14,100 @@ CATALOGO_PLANTILLAS = {
     'P002': {'tipo': 'Cuestionario F/V', 'img': 'img/imagenesActividades/FV.png'},
     'P003': {'tipo': 'Opción Múltiple', 'img': 'img/imagenesActividades/OPCIONES.png'},
     'P004': {'tipo': 'Sopa de Letras', 'img': 'img/imagenesActividades/SOPA.png'},
-        'P005': {'tipo': 'Completar Camino', 'img': 'img/imagenesActividades/COMPLETACAMINO.png'},
+    'C001': {'tipo': 'Completar Camino', 'img': 'img/imagenesActividades/COMPLETARCAMINO.png'},
     'P006': {'tipo': 'Completar Palabra', 'img': 'img/imagenesActividades/COMPLETARPALABRA.png'},
 }
 
+def extraer_datos_actividad(ruta_archivo_actividad):
+    """
+    Lee un archivo de actividad (formato: cabecera + --- + cuerpo JS)
+    y devuelve un dict con 'izquierda', 'derecha', 'respuestas' como strings con el código JS.
+    """
+    with open(ruta_archivo_actividad, 'r', encoding='utf-8') as f:
+        contenido = f.read()
+    
+    # Buscar después del separador '---'
+    if '---' in contenido:
+        _, cuerpo = contenido.split('---', 1)
+    else:
+        cuerpo = contenido
+    
+    # Extraer const izquierda = [...]
+    izq_match = re.search(r'const izquierda\s*=\s*(\[.*?\]);', cuerpo, re.DOTALL)
+    der_match = re.search(r'const derecha\s*=\s*(\[.*?\]);', cuerpo, re.DOTALL)
+    res_match = re.search(r'const respuestas\s*=\s*(\{.*?\});', cuerpo, re.DOTALL)
+    
+    if not izq_match or not der_match or not res_match:
+        raise ValueError("El archivo de actividad no tiene el formato esperado")
+    
+    return {
+        'izquierda': f"const izquierda = {izq_match.group(1)};",
+        'derecha': f"const derecha = {der_match.group(1)};",
+        'respuestas': f"const respuestas = {res_match.group(1)};"
+    }
+
+def generar_html_multimedia(archivos):
+    """
+    Recibe una lista de nombres de archivos (que ya están en la carpeta de la lección)
+    y devuelve el HTML correspondiente según extensión.
+    """
+    etiquetas = []
+    for arch in archivos:
+        nombre = arch
+        ext = os.path.splitext(nombre)[1].lower()
+        if ext in ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']:
+            etiquetas.append(f'<img src="{nombre}" alt="{nombre}">')
+        elif ext in ['.mp4', '.webm', '.ogg']:
+            etiquetas.append(f'<video controls><source src="{nombre}" type="video/{ext[1:]}">Tu navegador no soporta video.</video>')
+        elif ext == '.pdf':
+            etiquetas.append(f'<iframe src="{nombre}" title="Documento PDF"></iframe>')
+        elif ext in ['.mp3', '.wav', '.ogg']:
+            etiquetas.append(f'<audio controls><source src="{nombre}" type="audio/{ext[1:]}">Tu navegador no soporta audio.</audio>')
+        else:
+            # Archivo desconocido, no se muestra o se muestra como enlace
+            etiquetas.append(f'<p>Archivo adicional: <a href="{nombre}">{nombre}</a></p>')
+    return '\n'.join(etiquetas)
+
 def cargar_actividades():
-    ruta_carpeta = 'data/actividades'
-    lista_actividades = []
-
-    # Crear carpeta si no existe
+    # Usamos la misma lógica que el blueprint: app.root_path + 'data/actividades'
+    ruta_carpeta = os.path.join(app.root_path, 'data', 'actividades')
+    
+    # Si no existe, intenta con 'Actividades' (por si el usuario lo creó con mayúscula)
     if not os.path.exists(ruta_carpeta):
-        os.makedirs(ruta_carpeta)
+        ruta_carpeta = os.path.join(app.root_path, 'data', 'Actividades')
+    
+    lista_actividades = []
+    if not os.path.exists(ruta_carpeta):
+        os.makedirs(ruta_carpeta, exist_ok=True)
+        return lista_actividades
 
-    # Recorrer todos los archivos .txt en la carpeta
     for archivo in os.listdir(ruta_carpeta):
         if archivo.endswith('.txt'):
             ruta_completa = os.path.join(ruta_carpeta, archivo)
             datos = {}
-            
-            # Leemos solo el encabezado (hasta encontrar '---')
             try:
                 with open(ruta_completa, 'r', encoding='utf-8') as f:
                     for linea in f:
                         linea = linea.strip()
-                        if linea == '---': 
-                            break # Dejamos de leer al llegar al contenido
+                        if linea == '---':
+                            break
                         if ':' in linea:
                             clave, valor = linea.split(':', 1)
                             datos[clave.strip()] = valor.strip()
                 
-                # Procesamos la información visual (Imagen y Nombre del Tipo)
                 id_plantilla = datos.get('ID_PLANTILLA', '')
                 info_visual = CATALOGO_PLANTILLAS.get(id_plantilla, {'tipo': 'Desconocido', 'img': 'img/default.png'})
-                
                 datos['TIPO_LEGIBLE'] = info_visual['tipo']
                 datos['IMAGEN'] = info_visual['img']
-                datos['ARCHIVO'] = archivo # Guardamos el nombre del archivo para borrar/editar
-                
-                # Si no pusiste fecha en el txt, ponemos una por defecto
+                datos['ARCHIVO'] = archivo
                 if 'FECHA' not in datos:
-                    datos['FECHA'] = '01/02/2026' 
-
+                    datos['FECHA'] = '01/02/2026'
                 lista_actividades.append(datos)
             except Exception as e:
                 print(f"Error leyendo {archivo}: {e}")
-
     return lista_actividades
-app = Flask(__name__)
 # Esta llave es necesaria para usar 'session' y que los datos no se pierdan
-app.secret_key = 'toro_secret_key_2026' 
+
 
 # --- FUNCIÓN DE LECTURA ---
 def leer_datos(archivo):
@@ -241,63 +292,122 @@ from werkzeug.utils import secure_filename
 @app.route('/contenido/subir_leccion', methods=['GET', 'POST'])
 def subir_leccion():
     if request.method == 'POST':
-        # 1. Recibir datos del formulario (usamos .get para evitar errores si falta un campo)
         grupo = request.form.get('grupo')
         materia = request.form.get('materia')
         parcial = request.form.get('parcial')
         tema = request.form.get('tema')
-        actividad = request.form.get('actividad')
-        
-        # 2. Recibir los archivos
-        archivos_subidos = request.files.getlist('archivos') 
+        nombre_actividad_leccion = request.form.get('actividad')
+        actividad_seleccionada = request.form.get('actividad_seleccionada')
+        orden_archivos_str = request.form.get('orden_archivos', '')  # Campo oculto con el orden
+
+        archivos_subidos = request.files.getlist('archivos')
+
+        if not nombre_actividad_leccion:
+            return "Falta el nombre de la actividad", 400
+        if not actividad_seleccionada:
+            return "Debes seleccionar una actividad", 400
 
         try:
-            # 3. Crear la carpeta (Usando tu función dinámica de gestor_archivos.py)
-            ruta_destino = crear_estructura_leccion(grupo, materia, parcial, tema, actividad)
+            # Crear la carpeta de la lección
+            ruta_destino = crear_estructura_leccion(grupo, materia, parcial, tema, nombre_actividad_leccion)
 
-            # 4. Guardar cada archivo seleccionado
-            guardados = 0
-            for archivo in archivos_subidos:
+            # ========== 1. Copiar imágenes fijas del juego ==========
+            imagenes_juego = ['oak2.jpg', 'rana_quieto.png', 'rana_salto.gif']
+            ruta_origen_imagenes = os.path.join(app.root_path, 'static', 'img', 'imagenesActividades')
+            for img in imagenes_juego:
+                origen = os.path.join(ruta_origen_imagenes, img)
+                if os.path.exists(origen):
+                    shutil.copy2(origen, os.path.join(ruta_destino, img))
+                else:
+                    print(f"⚠️ No se encontró la imagen {img} en {origen}")
+
+            # ========== 2. Procesar archivos subidos en el orden seleccionado ==========
+            nombres_archivos = []
+
+            # Si tenemos el orden guardado, reordenamos la lista de archivos
+            if orden_archivos_str:
+                orden_nombres = orden_archivos_str.split(',')
+                # Crear un diccionario nombre -> objeto FileStorage
+                archivos_dict = {f.filename: f for f in archivos_subidos if f.filename}
+                archivos_ordenados = []
+                for nombre in orden_nombres:
+                    if nombre in archivos_dict:
+                        archivos_ordenados.append(archivos_dict[nombre])
+                # Añadir cualquier archivo que pudiera faltar en el orden (por si acaso)
+                for f in archivos_subidos:
+                    if f.filename and f.filename not in orden_nombres:
+                        archivos_ordenados.append(f)
+            else:
+                archivos_ordenados = archivos_subidos
+
+            # Guardar archivos en el orden obtenido
+            for archivo in archivos_ordenados:
                 if archivo and archivo.filename:
-                    # secure_filename limpia nombres con caracteres raros
                     nombre_seguro = secure_filename(archivo.filename)
-                    archivo.save(os.path.join(ruta_destino, nombre_seguro))
-                    guardados += 1
-            
-            print(f"Éxito: Se creó la carpeta en {ruta_destino} y se guardaron {guardados} archivos.")
-            
-            # 5. EL REGRESO AUTOMÁTICO:
-            # Al terminar, Flask le ordena al navegador volver a la lista principal
-            # donde la función 'vista_contenido' leerá la nueva carpeta creada.
+                    ruta_archivo = os.path.join(ruta_destino, nombre_seguro)
+                    archivo.save(ruta_archivo)
+                    nombres_archivos.append(nombre_seguro)
+
+            # ========== 3. Leer archivo de actividad (solo para generar HTML, sin copiarlo) ==========
+            ruta_actividad_origen = os.path.join(app.root_path, 'data', 'actividades', actividad_seleccionada)
+            if not os.path.exists(ruta_actividad_origen):
+                return f"El archivo de actividad {actividad_seleccionada} no existe", 400
+
+            # ========== 4. Generar el HTML dinámico ==========
+            try:
+                datos_act = extraer_datos_actividad(ruta_actividad_origen)
+                html_multimedia = generar_html_multimedia(nombres_archivos)  # Solo archivos subidos
+                plantilla_path = os.path.join(app.root_path, 'templates', 'plantilla_leccion.html')
+                with open(plantilla_path, 'r', encoding='utf-8') as f:
+                    plantilla_html = f.read()
+                html_final = plantilla_html.replace('{{ ARCHIVOS_MULTIMEDIA }}', html_multimedia)
+                html_final = html_final.replace('{{ IZQUIERDA_ARRAY }}', datos_act['izquierda'])
+                html_final = html_final.replace('{{ DERECHA_ARRAY }}', datos_act['derecha'])
+                html_final = html_final.replace('{{ RESPUESTAS_OBJ }}', datos_act['respuestas'])
+                ruta_html = os.path.join(ruta_destino, 'index.html')
+                with open(ruta_html, 'w', encoding='utf-8') as f:
+                    f.write(html_final)
+                print(f"✅ HTML generado en {ruta_html}")
+            except Exception as e:
+                print(f"Error al generar HTML: {e}")
+                return f"Error al generar la página de la actividad: {e}", 500
+
             return redirect(url_for('vista_contenido'))
 
         except Exception as e:
             print(f"Error al crear lección: {e}")
             return f"Hubo un error al procesar la carpeta: {e}", 500
 
-    # Si es GET (al cargar la página por primera vez), mostramos el formulario
+    # Método GET – mostrar formulario
     lecciones_existentes = obtener_lista_lecciones()
+    actividades = cargar_actividades()
+    return render_template('contenido/contenido_crear_leccion.html',
+                           lecciones=lecciones_existentes,
+                           actividades=actividades,
+                           active_page='contenido')
+
+    # GET: mostrar formulario (código ya existente)
+    lecciones_existentes = obtener_lista_lecciones()
+    actividades = cargar_actividades()
     return render_template('contenido/contenido_crear_leccion.html', 
                            lecciones=lecciones_existentes,
+                           actividades=actividades,
                            active_page='contenido')
     
 @app.route('/actividad/eliminar/<string:nombre_archivo>')
 def eliminar_actividad(nombre_archivo):
-    # 1. Construimos la ruta completa
-    carpeta_actividades = 'data/actividades'
+    carpeta_actividades = os.path.join(app.root_path, 'data', 'actividades')
+    if not os.path.exists(carpeta_actividades):
+        carpeta_actividades = os.path.join(app.root_path, 'data', 'Actividades')
     ruta_completa = os.path.join(carpeta_actividades, nombre_archivo)
-    
-    # 2. Verificamos que exista y lo borramos
     try:
         if os.path.exists(ruta_completa):
             os.remove(ruta_completa)
-            print(f"Archivo eliminado: {nombre_archivo}") # Para que lo veas en consola
+            print(f"Archivo eliminado: {nombre_archivo}")
         else:
             print("El archivo no existe")
     except Exception as e:
         print(f"Error al borrar: {e}")
-
-    # 3. Redirigimos de vuelta a la lista para ver los cambios
     return redirect(url_for('vista_contenido'))
 
 

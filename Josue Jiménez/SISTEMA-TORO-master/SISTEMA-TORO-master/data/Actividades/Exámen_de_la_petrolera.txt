@@ -1,9 +1,0 @@
-ID_PLANTILLA: P003
-NOMBRE: Exámen de la petrolera
-LECCION: A_Matemáticas_P2_Ejercicios_ACTIVIDAD_EJEMPLO_1
-INTENTOS: 4
-TIEMPO: 67 minutos
-TOTAL_PREGUNTAS: 1
-INSTRUCCIONES: Sin instrucciones adicionales.
----
-¿Quién fue el presidente Benito el de la colonia petrolera?|Mi tio|Mi papá|Mi bisabuelo|Un random|Un random

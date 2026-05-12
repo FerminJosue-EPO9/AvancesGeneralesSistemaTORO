@@ -381,20 +381,17 @@
     // GENERACIÓN DEL ARCHIVO .txt (Completar Camino)
     // ==========================================
     function generarTxtActividad() {
-        // Validar que sea el tipo 'Completar camino'
         if (inputPlantilla.value !== 'C001') {
             alert("Por ahora solo se exporta 'Completar camino'.");
             return false;
         }
 
-        // 1. Obtener las filas de palabra/pregunta
         const filas = document.querySelectorAll('#camino-items-list .fila-palabra-pregunta');
         if (filas.length === 0) {
             alert("No hay datos para exportar.");
             return false;
         }
 
-        // Arreglos para izquierda (preguntas) y derecha (palabras)
         const izquierda = [];
         const derecha = [];
         const respuestas = {};
@@ -413,52 +410,43 @@
             }
         });
 
-        // 2. Obtener métricas
         const nombre = document.querySelector('input[name="nombre_confirmacion"]').value.trim() || "Sin título";
         const intentos = document.querySelector('input[name="intentos"]').value || "3";
         const tiempo = document.querySelector('input[name="tiempo_limite"]').value || "";
         const fecha = document.querySelector('input[name="fecha_vencimiento"]').value || "No definida";
         const ponderacion = document.querySelector('input[name="ponderacion"]').value || "0";
 
-        // 3. Construir el contenido del archivo
-        let contenido = "";
+        const payload = {
+            izquierda: izquierda,
+            derecha: derecha,
+            respuestas: respuestas,
+            tipo: "completar-camino",
+            nombre: nombre,
+            intentos: intentos,
+            tiempo: tiempo,
+            fecha_vencimiento: fecha,
+            ponderacion: ponderacion
+        };
 
-        // Sección izquierda
-        contenido += "const izquierda = [\n";
-        izquierda.forEach(p => contenido += `            "${p}",\n`);
-        contenido = contenido.slice(0, -2) + "\n        ];\n\n";
-
-        // Sección derecha
-        contenido += "const derecha = [\n";
-        derecha.forEach(p => contenido += `            "${p}",\n`);
-        contenido = contenido.slice(0, -2) + "\n        ];\n\n";
-
-        // Sección respuestas
-        contenido += "const respuestas = {\n";
-        for (const [pregunta, palabra] of Object.entries(respuestas)) {
-            contenido += `            "${pregunta}": "${palabra}",\n`;
-        }
-        contenido = contenido.slice(0, -2) + "\n        };\n\n";
-
-        // Separador y métricas
-        contenido += "@@@ Métricas: \n";
-        contenido += `tipo:completar-camino\n`;
-        contenido += `nombre:${nombre}\n`;
-        contenido += `intentos:${intentos}\n`;
-        if (tiempo) contenido += `tiempo:${tiempo}\n`;
-        contenido += `fecha-vencimiento:${fecha}\n`;
-        contenido += `ponderacion:${ponderacion}\n`;
-
-        // 4. Descargar archivo .txt
-        const blob = new Blob([contenido], { type: "text/plain" });
-        const link = document.createElement("a");
-        const url = URL.createObjectURL(blob);
-        link.href = url;
-        link.download = `actividad_${nombre.replace(/\s+/g, "_")}.txt`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+        fetch('/guardar_actividad_txt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`✅ Actividad guardada correctamente en:\n${data.ruta}`);
+                    // Opcional: redirigir a contenido
+                    window.location.href = "{{ url_for('vista_contenido') }}";
+                } else {
+                    alert("❌ Error al guardar: " + (data.error || "Desconocido"));
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error de conexión con el servidor. ¿El servidor está corriendo?");
+            });
 
         return true;
     }
@@ -754,24 +742,24 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-    addQuestion();               // Primera pregunta para opción múltiple
-    updateUI();
+        addQuestion();               // Primera pregunta para opción múltiple
+        updateUI();
 
-    // Asignar eventos a los botones de navegación
-    document.getElementById('btn-next').onclick = nextStep;
-    document.getElementById('btn-prev').onclick = prevStep;
+        // Asignar eventos a los botones de navegación
+        document.getElementById('btn-next').onclick = nextStep;
+        document.getElementById('btn-prev').onclick = prevStep;
 
-    // Interceptar el envío del formulario para generar el TXT
-    const form = document.getElementById('wizard-form');
-      form.noValidate = true;
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();  // Evita el envío tradicional al servidor
-        if (currentStep === totalSteps) {
-            generarTxtActividad();
-        } else {
-            alert("Aún no has llegado al paso final.");
-        }
+        // Interceptar el envío del formulario para generar el TXT
+        const form = document.getElementById('wizard-form');
+        form.noValidate = true;
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();  // Evita el envío tradicional al servidor
+            if (currentStep === totalSteps) {
+                generarTxtActividad();
+            } else {
+                alert("Aún no has llegado al paso final.");
+            }
+        });
     });
-});
 </script>
 {% endblock %}
