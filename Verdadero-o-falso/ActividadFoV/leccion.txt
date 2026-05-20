@@ -4,6 +4,9 @@ NOMBRE_COMPLETO: Guadalupe Toledo Toledo
 
 === [ENTIDAD: LECCIÓN] ===
 ID_LECCION: L-002
+GRUPO:1BT
+MATERIA: DSOO
+PARCIAL: 3
 TITULO: Introducción al RUP y Diagramas de Secuencia
 TEMA: Rational Unified Process (RUP)
 
