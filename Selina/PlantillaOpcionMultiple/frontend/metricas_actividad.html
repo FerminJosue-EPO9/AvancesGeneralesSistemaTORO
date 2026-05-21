@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Configurar métricas</title>
+    <link rel="stylesheet" href="stylesOM.css">
+
+    <link rel="stylesheet" href="stylesMetricas.css">
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="img/logo_cbta_blanco.png" class="logo-sidebar">
+            <p>
+                ¡Bienvenido,<br>
+                Profesor José Luis!
+            </p>
+        </div>
+
+        <nav class="menu">
+            <a href="#" class="menu-item">
+                <img src="img/grupo.png" class="menu-icon">
+                <span>Grupos</span>
+            </a>
+
+            <a href="#" class="menu-item active">
+                <img src="img/contenido.png" class="menu-icon">
+                <span>Contenido</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <img src="img/calificaciones.png" class="menu-icon">
+                <span>Calificaciones</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <img src="img/estadisticas.png" class="menu-icon">
+                <span>Estadísticas</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+        <!-- BREADCRUMB -->
+        <div class="breadcrumb">
+            Contenido > Crear actividad >
+            Cuestionarios > Opción múltiple
+        </div>
+
+        <!-- TÍTULO -->
+        <h1 class="steps-main-title">
+            CREAR ACTIVIDAD
+        </h1>
+
+        <!-- PASOS -->
+        <div class="steps-container">
+            <div class="steps">
+                <div class="line"></div>
+                <div class="step active">
+                    <div class="circle">1</div>
+                    <p>Selecciona la plantilla</p>
+                </div>
+
+                <div class="step active">
+                    <div class="circle">2</div>
+                    <p>Configurar plantilla</p>
+                </div>
+
+                <div class="step active">
+                    <div class="circle">3</div>
+                    <p>
+                        Configurar métricas
+                        de la actividad
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="circle">4</div>
+                    <p>Finalizar</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULARIO -->
+        <div class="metrics-container">
+            <div class="metric-row">
+                <label> Título de la actividad</label>
+                <input type="text" class="metric-input" id="activityTitle">
+            </div>
+
+            <div class="metric-row">
+                <label> Fecha de vencimiento</label>
+                <input type="date" class="metric-input" id="dueDate">
+            </div>
+
+            <div class="metric-row">
+                <label>Tiempo límite</label>
+                <input type="number" class="metric-input" id="timeLimit">
+            </div>
+
+            <div class="metric-row">
+                <label>Intentos máximos</label>
+                <input type="number" class="metric-input" id="maxAttempts">
+            </div>
+
+            <div class="metric-row">
+                <label> Ponderación </label>
+                <input type="number" class="metric-input" id="score">
+            </div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="buttons-container">
+            <button class="back-btn" id="backBtn">
+                Regresar
+            </button>
+
+            <button class="next-btn" id="nextBtn">
+                Siguiente
+            </button>
+        </div>
+    </main>
+
+    <!-- MODAL REGRESAR -->
+    <div class="delete-modal" id="backWarningModal">
+        <div class="delete-box">
+            <p>
+                Se eliminará el progreso de la
+                configuración de las métricas
+                de la actividad
+            </p>
+            <div class="delete-buttons">
+                <button id="cancelBackBtn">
+                    Cancelar
+                </button>
+
+                <button id="confirmBackBtn">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="metricas.js"></script>
+
+</body>
+
+</html>

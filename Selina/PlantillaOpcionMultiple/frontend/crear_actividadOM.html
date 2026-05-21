@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Actividad</title>
+
+    <link rel="stylesheet" href="stylesOM.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="img/logo_cbta_blanco.png" class="logo-sidebar">
+            <p>
+                ¡Bienvenido,<br>
+                Profesor José Luis!
+            </p>
+        </div>
+
+        <nav class="menu">
+            <a href="#" class="menu-item">
+                <img src="img/grupo.png" class="menu-icon">
+                <span>Grupos</span>
+            </a>
+
+            <a href="#" class="menu-item active">
+                <img src="img/contenido.png" class="menu-icon">
+                <span>Contenido</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <img src="img/calificaciones.png" class="menu-icon">
+                <span>Calificaciones</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <img src="img/estadisticas.png" class="menu-icon">
+                <span>Estadísticas</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- MIGAS -->
+        <div class="breadcrumb">
+            Contenido > Crear actividad > Cuestionarios > Opción múltiple
+        </div>
+
+        <!-- PASOS PARA CREAR ACTIVIDAD -->
+        <h2 class="steps-main-title">
+            CREAR ACTIVIDAD
+        </h2>
+
+        <section class="steps-container">
+            <div class="steps">
+                <div class="line"></div>
+
+                <div class="step active">
+                    <div class="circle">1</div>
+                    <p>Selecciona la plantilla</p>
+                </div>
+
+                <div class="step active">
+                    <div class="circle">2</div>
+                    <p>Configurar plantilla</p>
+                </div>
+
+                <div class="step">
+                    <div class="circle">3</div>
+                    <p>Configurar métricas<br>de la actividad</p>
+                </div>
+
+                <div class="step">
+                    <div class="circle">4</div>
+                    <p>Finalizar</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTENEDOR DEL FORMULARIO -->
+        <section class="question-container">
+            <div class="question-header">
+                <h3>Cuestionario de opción múltiple</h3>
+                <div class="help-button">?</div>
+            </div>
+
+            <div class="question-body">
+                <!-- PARA AGREGAR LAS PREGUNTAS -->
+                <div class="questions-wrapper">
+                </div>
+
+                <div class="empty-message" id="emptyMessage">
+                    “Aún no has agregado ninguna<br>
+                    pregunta. ¡Comienza creando la<br>
+                    primera!”.
+                </div>
+            </div>
+
+              <!-- BOTÓN -->
+                <button class="add-question-btn">
+                    + Agregar<br>pregunta
+                </button>
+        </section>
+
+        <!-- BOTONES -->
+        <div class="buttons-container">
+            <button class="back-btn">
+                Regresar
+            </button>
+
+            <button class="next-btn">
+                Siguiente
+            </button>
+        </div>
+    </main>
+
+    <!-- MODALES -->
+    <div class="help-modal" id="helpModal">
+        <div class="help-box">
+            <p>
+                Para completar la actividad, se deben incluir entre 5 y 15 preguntas.
+                <br><br>
+                Cada pregunta deberá contar con un máximo de 4 incisos.
+            </p>
+            <button class="help-accept-btn" id="closeHelpBtn">
+                Aceptar
+            </button>
+        </div>
+    </div>
+
+    <div class="warning-modal" id="warningModal">
+        <div class="warning-box">
+            <p id="warningMessage"></p>
+            <button id="warningAcceptBtn">
+                Aceptar
+            </button>
+        </div>
+    </div>
+
+    <!-- TEMPLATE DE PREGUNTA -->
+    <template id="question-template">
+        <div class="question-card">
+            <button class="delete-editing-question-btn">
+                ˣ
+            </button>
+            <p class="question-label">
+                Escribe tu pregunta y marca la opción correcta:
+            </p>
+            <div class="question-top">
+                <input type="text" class="question-input" placeholder="">
+                <button class="add-option-btn">
+                    + Agregar inciso
+                </button>
+            </div>
+
+            <div class="options-container"></div>
+
+            <button class="save-question-btn">
+                Guardar pregunta
+            </button>
+        </div>
+    </template>
+
+    <div class="delete-modal" id="deleteModal">
+        <div class="delete-box">
+            <p>
+                Se eliminará el progreso de la pregunta
+            </p>
+            <div class="delete-buttons">
+                <button id="cancelDeleteBtn">
+                    Cancelar
+                </button>
+                <button id="confirmDeleteBtn">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="appOM.js"></script>
+
+</body>
+
+</html>
