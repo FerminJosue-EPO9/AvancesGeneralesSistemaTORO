@@ -1,0 +1,508 @@
+/* ===================================== */
+/* VARIABLES GLOBALES */
+/* ===================================== */
+:root {
+    --azul-primario: #171C52;
+    --verde-primario: #33743A;
+    --blanco: #FFFFFF;
+    --gris-claro: #F3F3F3;
+    --gris-medio: #A8A8A8;
+    --gris-oscuro: #666666;
+}
+
+/* ===================================== */
+/* RESET */
+/* ===================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================================== */
+/* BODY */
+/* ===================================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+    overflow-x: hidden;
+}
+
+/* ===================================== */
+/* CONTENEDOR PRINCIPAL */
+/* ===================================== */
+.contenedor {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===================================== */
+/* BARRA LATERAL */
+/* ===================================== */
+.barra-lateral {
+    width: 260px;
+    background-color: var(--azul-primario);
+    color: var(--blanco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+.contenedor-logo {
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 120px;
+}
+
+.texto-bienvenida {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.texto-bienvenida h2 {
+    font-size: 2rem;
+    line-height: 1.5;
+    font-weight: normal;
+}
+
+.menu {
+    width: 100%;
+}
+
+.item-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item-menu img {
+    width: 30px;
+}
+
+.item-menu span {
+    font-size: 1.4rem;
+}
+
+.item-menu.activo {
+    background-color: var(--verde-primario);
+}
+
+.item-menu:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ===================================== */
+/* CONTENIDO PRINCIPAL */
+/* ===================================== */
+.contenido-principal {
+    flex: 1;
+    padding: 30px;
+}
+
+.ruta-navegacion {
+    color: #4a42ff;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.titulo-principal {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+/* ===================================== */
+/* PASOS */
+/* ===================================== */
+.contenedor-pasos {
+    position: relative;
+    background-color: white;
+    max-width: 900px;
+    margin: auto;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.linea-pasos {
+    position: absolute;
+    width: 70%;
+    height: 3px;
+    background-color: #bdbdbd;
+    top: 72px;
+    z-index: 1;
+}
+
+.paso {
+    z-index: 2;
+    text-align: center;
+}
+
+.circulo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: white;
+    border: 2px solid #444;
+}
+
+.verde {
+    background-color: #71D675;
+}
+
+.gris {
+    background-color: #9B9494;
+}
+
+.paso p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* ===================================== */
+/* TÍTULO RESUMEN */
+/* ===================================== */
+.titulo-resumen {
+    text-align: center;
+    font-size: 2.3rem;
+    font-weight: normal;
+    margin-bottom: 35px;
+    color: #222;
+}
+
+/* ===================================== */
+/* PANEL FINAL */
+/* ===================================== */
+.panel-finalizacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+.panel-finalizacion.con-mensaje-visible {
+    margin-bottom: 200px;   /* Empuja los botones hacia abajo */
+}
+
+/* ===================================== */
+/* TARJETA RESUMEN */
+/* ===================================== */
+.tarjeta-resumen {
+    position: relative;
+    width: 720px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 45px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ===================================== */
+/* ENCABEZADO */
+/* ===================================== */
+.encabezado-resumen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.texto-plantilla h3 {
+    font-size: 2rem;
+    font-weight: normal;
+    line-height: 1.3;
+    color: #222;
+}
+
+/* ===================================== */
+/* ICONOS */
+/* ===================================== */
+.iconos-verdadero-falso {
+    position: relative;      /* ← nuevo punto de referencia para la imagen */
+    width: 80px;             /* espacio reservado para que no colapse */
+    height: 80px;
+}
+
+.icono-falso,
+.icono-verdadero {
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    color: white;
+}
+
+.icono-falso {
+    background-color: #FF5757;
+}
+
+.icono-verdadero {
+    background-color: #6BCB77;
+}
+
+/* ===================================== */
+/* CONTENEDOR DATOS */
+/* ===================================== */
+.contenedor-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ===================================== */
+/* FILAS */
+/* ===================================== */
+.fila-resumen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* ===================================== */
+/* ETIQUETAS */
+/* ===================================== */
+.etiqueta-resumen {
+    width: 280px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #222;
+    line-height: 1.4;
+}
+
+/* ===================================== */
+/* VALORES */
+/* ===================================== */
+.valor-resumen {
+    flex: 1;
+    min-height: 55px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* ===================================== */
+/* BOTONES */
+/* ===================================== */
+.botones-inferiores {
+    margin-top: 45px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.boton-regresar,
+.boton-siguiente {
+    width: 220px;
+    height: 65px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton-regresar {
+    background-color: white;
+    border: 3px solid black;
+}
+
+.boton-siguiente {
+    background-color: var(--azul-primario);
+    color: white;
+    border: none;
+}
+
+.boton-regresar:hover,
+.boton-siguiente:hover {
+    opacity: 0.9;
+}
+
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+@media screen and (max-width: 1024px) {
+
+    .barra-lateral {
+        width: 220px;
+    }
+
+    .tarjeta-resumen {
+        width: 95%;
+    }
+
+}
+
+/* ===================================== */
+/* RESPONSIVE MOBILE */
+/* ===================================== */
+@media screen and (max-width: 768px) {
+
+    .contenedor {
+        flex-direction: column;
+    }
+
+    .barra-lateral {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .item-menu {
+        width: 45%;
+    }
+
+    .contenido-principal {
+        padding: 15px;
+    }
+
+    .titulo-principal {
+        font-size: 2rem;
+    }
+
+    .titulo-resumen {
+        font-size: 1.8rem;
+    }
+
+    .contenedor-pasos {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .linea-pasos {
+        display: none;
+    }
+
+    .tarjeta-resumen {
+        width: 100%;
+        padding: 25px;
+    }
+
+    .encabezado-resumen {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .fila-resumen {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .etiqueta-resumen {
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    .valor-resumen {
+        width: 100%;
+    }
+
+    .botones-inferiores {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .boton-regresar,
+    .boton-siguiente {
+        width: 90%;
+    }
+}
+
+.imagen-falso-verdadero {
+    position: absolute;
+    top: 0;                  /* arriba del contenedor */
+    right: 0;                /* alineado a la derecha del encabezado */
+    width: 250px;
+    height: auto;
+    transform: translateX(-100px);  /* solo mueves horizontalmente */
+}
+
+/* ===================================== */
+/* MENSAJE FINAL */
+/* ===================================== */
+/* ===================================== */
+/* MENSAJE FINAL */
+/* ===================================== */
+.mensaje-final {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #C9F1C5;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 150px 30px;        /* suficiente para lucir espacioso */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+    z-index: 10;
+}
+
+.texto-finalizacion {
+    font-size: 2.5rem;           /* texto más grande */
+    color: #333;                 /* un poco más oscuro para que contraste */
+    text-align: center;
+    line-height: 1.4;
+}
+
+.boton-ir-actividades {
+    width: 300px;
+    height: 200px;               /* ahora sí crecerá */
+    border: none;
+    border-radius: 10px;
+    background-color: #2DAE43;
+    color: white;
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton-ir-actividades:hover {
+    opacity: 0.9;
+}
+
+/* ===================================== */
+/* UTILIDADES */
+/* ===================================== */
+.oculto {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}

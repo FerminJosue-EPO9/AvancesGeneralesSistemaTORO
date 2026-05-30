@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <!-- Configuración básica -->
+    <meta charset="UTF-8">
+
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título -->
+    <title>
+        Sistema Educativo CBTA
+    </title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="metricas.css">
+
+</head>
+
+<body>
+
+    <!-- ====================================== -->
+    <!-- CONTENEDOR PRINCIPAL -->
+    <!-- ====================================== -->
+    <div class="contenedor">
+
+        <!-- ====================================== -->
+        <!-- BARRA LATERAL -->
+        <!-- ====================================== -->
+        <aside class="barra-lateral">
+
+            <!-- Logo -->
+            <div class="contenedor-logo">
+
+                <img src="logo.png" alt="Logo CBTA" class="logo">
+
+            </div>
+
+            <!-- Bienvenida -->
+            <div class="texto-bienvenida">
+
+                <h2>
+                    ¡Bienvenido,<br>
+                    Profesor José Luis!
+                </h2>
+
+            </div>
+
+            <!-- Menú -->
+            <nav class="menu">
+
+                <!-- Grupos -->
+                <div class="item-menu">
+
+                    <img src="grupos.png" alt="Grupos">
+
+                    <span>
+                        Grupos
+                    </span>
+
+                </div>
+
+                <!-- Contenido -->
+                <div class="item-menu activo">
+
+                    <img src="contenido.png" alt="Contenido">
+
+                    <span>
+                        Contenido
+                    </span>
+
+                </div>
+
+                <!-- Calificaciones -->
+                <div class="item-menu">
+
+                    <img src="calificaciones.png" alt="Calificaciones">
+
+                    <span>
+                        Calificaciones
+                    </span>
+
+                </div>
+
+                <!-- Estadísticas -->
+                <div class="item-menu">
+
+                    <img src="estadisticas.png" alt="Estadísticas">
+
+                    <span>
+                        Estadísticas
+                    </span>
+
+                </div>
+
+            </nav>
+
+        </aside>
+
+        <!-- ====================================== -->
+        <!-- CONTENIDO PRINCIPAL -->
+        <!-- ====================================== -->
+        <main class="contenido-principal">
+
+            <!-- Ruta -->
+            <div class="ruta-navegacion">
+
+                Contenido > Crear actividad >
+                Cuestionarios > Falso o verdadero
+
+            </div>
+
+            <!-- Título -->
+            <h1 class="titulo-principal">
+
+                CREAR ACTIVIDAD
+
+            </h1>
+
+            <!-- ====================================== -->
+            <!-- PASOS -->
+            <!-- ====================================== -->
+            <section class="contenedor-pasos">
+
+                <!-- Línea -->
+                <div class="linea-pasos"></div>
+
+                <!-- Paso 1 -->
+                <div class="paso paso-activo">
+
+                    <div class="circulo verde">
+                        1
+                    </div>
+
+                    <p>
+                        Selecciona la plantilla
+                    </p>
+
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="paso paso-activo">
+
+                    <div class="circulo verde">
+                        2
+                    </div>
+
+                    <p>
+                        Configurar plantilla
+                    </p>
+
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="paso paso-activo">
+
+                    <div class="circulo verde">
+                        3
+                    </div>
+
+                    <p>
+                        Configurar métricas<br>
+                        de la actividad
+                    </p>
+
+                </div>
+
+                <!-- Paso 4 -->
+                <div class="paso">
+
+                    <div class="circulo gris">
+                        4
+                    </div>
+
+                    <p>
+                        Finalizar
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- ====================================== -->
+            <!-- PANEL MÉTRICAS -->
+            <!-- ====================================== -->
+            <section class="panel-metricas">
+
+                <!-- Formulario -->
+                <form class="formulario-metricas" autocomplete="off">
+
+                    <!-- ====================================== -->
+                    <!-- TÍTULO -->
+                    <!-- ====================================== -->
+                    <div class="fila-metrica">
+
+                        <label for="tituloActividad">
+
+                            Título de la actividad *
+
+                        </label>
+
+                        <input type="text" id="tituloActividad" placeholder="Título">
+
+                    </div>
+
+                    <!-- ====================================== -->
+                    <!-- FECHA -->
+                    <!-- ====================================== -->
+                    <div class="fila-metrica">
+
+                        <label for="fechaVencimiento">
+
+                            Fecha de vencimiento *
+
+                        </label>
+
+                        <input type="date" id="fechaVencimiento">
+
+                    </div>
+
+                    <!-- ====================================== -->
+                    <!-- TIEMPO -->
+                    <!-- ====================================== -->
+                    <div class="fila-metrica">
+
+                        <label for="tiempoLimite">
+
+                            Tiempo límite (minutos) *
+
+                        </label>
+
+                        <input type="number" id="tiempoLimite" placeholder="30" min="1">
+
+                    </div>
+
+                    <!-- ====================================== -->
+                    <!-- INTENTOS -->
+                    <!-- ====================================== -->
+                    <div class="fila-metrica">
+
+                        <label for="intentosMaximos">
+
+                            Intentos máximos *
+
+                        </label>
+
+                        <input type="number" id="intentosMaximos" placeholder="3" min="1">
+
+                    </div>
+
+                    <!-- ====================================== -->
+                    <!-- PUNTOS -->
+                    <!-- ====================================== -->
+                    <div class="fila-metrica">
+
+                        <label for="ponderacionPuntos">
+
+                            Ponderación en puntos *
+
+                        </label>
+
+                        <input type="number" id="ponderacionPuntos" placeholder="10" min="1">
+
+                    </div>
+
+                </form>
+
+            </section>
+
+            <!-- ====================================== -->
+            <!-- BOTONES INFERIORES -->
+            <!-- ====================================== -->
+            <div class="botones-inferiores">
+
+                <!-- Regresar -->
+                <button type="button" class="boton-regresar">
+
+                    Regresar
+
+                </button>
+
+                <!-- Siguiente -->
+                <button type="button" class="boton-siguiente">
+
+                    Siguiente
+
+                </button>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="metricas.js"></script>
+
+</body>
+
+</html>

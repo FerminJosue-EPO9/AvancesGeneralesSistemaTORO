@@ -1,0 +1,448 @@
+/* ===================================== */
+/* VARIABLES GLOBALES */
+/* ===================================== */
+:root {
+    --azul-primario: #171C52;
+    --verde-primario: #33743A;
+    --blanco: #FFFFFF;
+    --gris-claro: #F3F3F3;
+    --gris-medio: #A8A8A8;
+    --gris-oscuro: #666666;
+}
+
+/* ===================================== */
+/* RESET */
+/* ===================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================================== */
+/* BODY */
+/* ===================================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+    overflow-x: hidden;
+}
+
+/* ===================================== */
+/* CONTENEDOR PRINCIPAL */
+/* ===================================== */
+.contenedor {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===================================== */
+/* BARRA LATERAL */
+/* ===================================== */
+.barra-lateral {
+    width: 260px;
+    background-color: var(--azul-primario);
+    color: var(--blanco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+.contenedor-logo {
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 120px;
+}
+
+.texto-bienvenida {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.texto-bienvenida h2 {
+    font-size: 2rem;
+    line-height: 1.5;
+    font-weight: normal;
+}
+
+.menu {
+    width: 100%;
+}
+
+.item-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item-menu img {
+    width: 30px;
+}
+
+.item-menu span {
+    font-size: 1.4rem;
+}
+
+.item-menu.activo {
+    background-color: var(--verde-primario);
+}
+
+.item-menu:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ===================================== */
+/* CONTENIDO PRINCIPAL */
+/* ===================================== */
+.contenido-principal {
+    flex: 1;
+    padding: 30px;
+}
+
+.ruta-navegacion {
+    color: #4a42ff;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.titulo-principal {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+/* ===================================== */
+/* PASOS */
+/* ===================================== */
+.contenedor-pasos {
+    position: relative;
+    background-color: white;
+    max-width: 900px;
+    margin: auto;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.linea-pasos {
+    position: absolute;
+    width: 70%;
+    height: 3px;
+    background-color: #bdbdbd;
+    top: 72px;
+    z-index: 1;
+}
+
+.paso {
+    z-index: 2;
+    text-align: center;
+}
+
+.circulo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: white;
+    border: 2px solid #444;
+}
+
+.verde {
+    background-color: #71D675;
+}
+
+.gris {
+    background-color: #9B9494;
+}
+
+.paso p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* ===================================== */
+/* PANEL MÉTRICAS */
+/* ===================================== */
+.panel-metricas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    padding-bottom: 40px;
+}
+
+/* ===================================== */
+/* FORMULARIO */
+/* ===================================== */
+.formulario-metricas {
+    position: relative; 
+    background-color: white;
+    width: 700px;
+    padding: 45px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ===================================== */
+/* FILAS */
+/* ===================================== */
+.fila-metrica {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 35px;
+}
+
+.fila-metrica:last-child {
+    margin-bottom: 0;
+}
+
+.fila-metrica label {
+    width: 260px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #222;
+    line-height: 1.4;
+}
+
+.fila-metrica input {
+    flex: 1;
+    height: 52px;
+    border-radius: 12px;
+    border: 2px solid #888;
+    padding: 0 15px;
+    font-size: 1.1rem;
+    outline: none;
+    transition: 0.3s;
+    background-color: white;
+}
+
+.fila-metrica input:focus {
+    border-color: #171C52;
+    box-shadow: 0 0 5px rgba(23, 28, 82, 0.2);
+}
+
+.fila-metrica input::placeholder {
+    color: #999;
+}
+
+input[type="date"] {
+    cursor: pointer;
+}
+
+/* ===================================== */
+/* BOTONES INFERIORES */
+/* ===================================== */
+.botones-inferiores {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.boton-regresar,
+.boton-siguiente {
+    width: 220px;
+    height: 65px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton-regresar {
+    background-color: white;
+    border: 3px solid black;
+}
+
+.boton-siguiente {
+    background-color: #666;
+    color: white;
+    border: none;
+}
+
+.boton-regresar:hover,
+.boton-siguiente:hover {
+    opacity: 0.9;
+}
+
+/* ===================================== */
+/* MODAL */
+/* ===================================== */
+.fondo-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 999;
+    border-radius: 10px;  
+}
+
+.fondo-modal.activo {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-personalizado {
+    width: 500px;
+    max-width: 90%;
+    background-color: #FFEDED;
+    border-radius: 15px;
+    padding: 45px 50px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: animacionModal 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-personalizado p {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: #222;
+    margin-bottom: 35px;
+    text-align: justify;
+    max-width: 500px;
+}
+
+.botones-eliminar {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.boton-cancelar-eliminar,
+.boton-confirmar-eliminar {
+    width: 180px;
+    height: 60px;
+    border-radius: 20px;
+    border: 3px solid black;
+    background-color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton-cancelar-eliminar:hover,
+.boton-confirmar-eliminar:hover {
+    opacity: 0.9;
+}
+
+@keyframes animacionModal {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ===================================== */
+/* UTILIDADES */
+/* ===================================== */
+.oculto {
+    display: none;
+}
+
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+@media screen and (max-width: 1024px) {
+    .barra-lateral {
+        width: 220px;
+    }
+}
+
+/* ===================================== */
+/* RESPONSIVE MOBILE */
+/* ===================================== */
+@media screen and (max-width: 768px) {
+    .contenedor {
+        flex-direction: column;
+    }
+    .barra-lateral {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+    .menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .item-menu {
+        width: 45%;
+    }
+    .contenido-principal {
+        padding: 15px;
+    }
+    .titulo-principal {
+        font-size: 2rem;
+    }
+    .contenedor-pasos {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .linea-pasos {
+        display: none;
+    }
+    .botones-inferiores {
+        flex-direction: column;
+        align-items: center;
+    }
+    .boton-regresar,
+    .boton-siguiente {
+        width: 90%;
+    }
+    .formulario-metricas {
+        width: 95%;
+        padding: 25px;
+    }
+    .fila-metrica {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .fila-metrica label {
+        width: 100%;
+        font-size: 1.1rem;
+    }
+    .fila-metrica input {
+        width: 100%;
+    }
+    .modal-personalizado {
+        padding: 25px;
+    }
+    .modal-personalizado p {
+        font-size: 1.2rem;
+    }
+}

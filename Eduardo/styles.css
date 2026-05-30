@@ -1,0 +1,808 @@
+/* ===================================== */
+/* VARIABLES GLOBALES */
+/* ===================================== */
+:root {
+    --azul-primario: #171C52;
+    --verde-primario: #33743A;
+    --blanco: #FFFFFF;
+    --gris-claro: #F3F3F3;
+    --gris-medio: #A8A8A8;
+    --gris-oscuro: #666666;
+}
+
+/* ===================================== */
+/* RESET */
+/* ===================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================================== */
+/* BODY */
+/* ===================================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2f2f2;
+    overflow-x: hidden;
+}
+
+/* ===================================== */
+/* CONTENEDOR PRINCIPAL */
+/* ===================================== */
+.contenedor {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===================================== */
+/* BARRA LATERAL */
+/* ===================================== */
+.barra-lateral {
+    width: 260px;
+    background-color: var(--azul-primario);
+    color: var(--blanco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+/* ===================================== */
+/* LOGO */
+/* ===================================== */
+.contenedor-logo {
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 120px;
+}
+
+/* ===================================== */
+/* TEXTO BIENVENIDA */
+/* ===================================== */
+.texto-bienvenida {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.texto-bienvenida h2 {
+    font-size: 2rem;
+    line-height: 1.5;
+    font-weight: normal;
+}
+
+/* ===================================== */
+/* MENÚ */
+/* ===================================== */
+.menu {
+    width: 100%;
+}
+
+.item-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item-menu img {
+    width: 30px;
+}
+
+.item-menu span {
+    font-size: 1.4rem;
+}
+
+.item-menu.activo {
+    background-color: var(--verde-primario);
+}
+
+.item-menu:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ===================================== */
+/* CONTENIDO PRINCIPAL */
+/* ===================================== */
+.contenido-principal {
+    flex: 1;
+    padding: 30px;
+}
+
+/* ===================================== */
+/* RUTA DE NAVEGACIÓN */
+/* ===================================== */
+.ruta-navegacion {
+    color: #4a42ff;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* ===================================== */
+/* TÍTULO PRINCIPAL */
+/* ===================================== */
+.titulo-principal {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+/* ===================================== */
+/* PASOS */
+/* ===================================== */
+.contenedor-pasos {
+    position: relative;
+    background-color: white;
+    max-width: 900px;
+    margin: auto;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.linea-pasos {
+    position: absolute;
+    width: 70%;
+    height: 3px;
+    background-color: #bdbdbd;
+    top: 72px;
+    z-index: 1;
+}
+
+.paso {
+    z-index: 2;
+    text-align: center;
+}
+
+.circulo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: white;
+    border: 2px solid #444;
+}
+
+.verde {
+    background-color: #71D675;
+}
+
+.gris {
+    background-color: #9B9494;
+}
+
+.paso p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* ===================================== */
+/* PANEL DE PREGUNTAS */
+/* ===================================== */
+.panel-preguntas {
+    background-color: white;
+    height: 550px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ===================================== */
+/* ENCABEZADO DEL PANEL */
+/* ===================================== */
+.encabezado-panel {
+    background-color: var(--azul-primario);
+    color: white;
+    padding: 20px;
+    font-size: 2.5rem;
+}
+
+/* ===================================== */
+/* CONTENIDO DEL PANEL */
+/* ===================================== */
+.contenido-panel {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* ===================================== */
+/* CONTENEDOR DE PREGUNTAS */
+/* ===================================== */
+#contenedorPreguntas {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* ===================================== */
+/* MENSAJE VACÍO */
+/* ===================================== */
+.mensaje-vacio {
+    text-align: center;
+    color: #8A8A8A;
+    font-size: 2rem;
+    line-height: 1.4;
+    max-width: 500px;
+    margin-bottom: 20px;
+    transform: translateY(10px);
+}
+
+/* ===================================== */
+/* BOTÓN AGREGAR */
+/* ===================================== */
+.boton-agregar {
+    position: absolute;
+    bottom: 25px;
+    right: 40px;
+    background-color: var(--verde-primario);
+    color: white;
+    border: none;
+    width: 170px;
+    height: 70px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 20;
+}
+
+/* Estado activo (esquina inferior derecha, gris) */
+.boton-agregar.boton-activo {
+    position: absolute;
+    bottom: 25px;
+    right: 40px;
+    background-color: #5F5F5F;
+    width: 170px;
+    height: 70px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: 0.3s;
+}
+
+/* Botón en estado inicial (debajo del mensaje, centrado) */
+.boton-agregar.inicial {
+    position: static;
+    width: auto;
+    padding: 12px 30px;
+    margin: 25px auto 0;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+/* Botón habilitado */
+.boton-agregar.listo {
+    background-color: #00A61C;
+}
+
+/* ===================================== */
+/* BOTÓN INFORMACIÓN */
+/* ===================================== */
+.boton-info {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid black;
+    background-color: #0C3A7D;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* ===================================== */
+/* TARJETA PREGUNTA */
+/* ===================================== */
+.tarjeta-pregunta {
+    width: 500px;
+    background-color: #F5F5F5;
+    padding: 25px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 2;
+}
+
+/* ===================================== */
+/* TÍTULO PREGUNTA */
+/* ===================================== */
+.titulo-pregunta {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* ===================================== */
+/* BOTÓN CERRAR */
+/* ===================================== */
+.cerrar-pregunta {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: red;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* ===================================== */
+/* INPUT */
+/* ===================================== */
+.entrada-pregunta {
+    width: 100%;
+    height: 60px;
+    border-radius: 15px;
+    border: 2px solid #999;
+    padding: 15px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    outline: none;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.entrada-pregunta.error {
+    border: 2px solid #FF4B4B;
+}
+
+/* ===================================== */
+/* ACCIONES */
+/* ===================================== */
+.acciones-pregunta {
+    display: flex;
+    gap: 15px;
+}
+
+/* ===================================== */
+/* TOGGLE VERDADERO/FALSO */
+/* ===================================== */
+.contenedor-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #00A61C;
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-width: 95px;
+}
+
+.contenedor-toggle.estado-falso {
+    background-color: #B12D2D;
+}
+
+.texto-toggle {
+    color: white;
+    font-size: 1.1rem;
+    margin-top: 5px;
+}
+
+/* Switch */
+.interruptor {
+    position: relative;
+    display: inline-block;
+    width: 55px;
+    height: 28px;
+}
+
+.interruptor input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.deslizador {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #BDBDBD;
+    transition: .3s;
+    border-radius: 34px;
+}
+
+.deslizador:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+.interruptor input:checked + .deslizador {
+    background-color: #7E7E7E;
+}
+
+.interruptor input:checked + .deslizador:before {
+    transform: translateX(26px);
+}
+
+/* ===================================== */
+/* BOTÓN GUARDAR */
+/* ===================================== */
+.boton-guardar {
+    background-color: #103D7A;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* ===================================== */
+/* BOTONES INFERIORES */
+/* ===================================== */
+.botones-inferiores {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.boton-regresar,
+.boton-siguiente {
+    width: 220px;
+    height: 65px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.boton-regresar {
+    background-color: white;
+    border: 3px solid black;
+}
+
+.boton-siguiente {
+    background-color: #666;
+    color: white;
+    border: none;
+}
+
+/* ===================================== */
+/* HOVERS */
+/* ===================================== */
+.boton-agregar:hover,
+.boton-guardar:hover,
+.boton-modal:hover,
+.boton-regresar:hover,
+.boton-siguiente:hover,
+.boton-info:hover {
+    opacity: 0.9;
+}
+
+/* ===================================== */
+/* MODAL */
+/* ===================================== */
+.fondo-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 999;
+}
+
+.fondo-modal.activo {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-personalizado {
+    width: 600px;
+    max-width: 90%;
+    background-color: #F2E2E2;
+    border-radius: 15px;
+    padding: 45px 50px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: animacionModal 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translate(180px, 120px);
+}
+
+.modal-personalizado p {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: #222;
+    margin-bottom: 35px;
+    text-align: justify;
+    max-width: 500px;
+}
+
+.boton-modal {
+    display: block;
+    margin: auto;
+    width: 180px;
+    height: 55px;
+    border-radius: 30px;
+    border: 3px solid black;
+    background-color: #9EF279;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* ===================================== */
+/* ANIMACIÓN MODAL */
+/* ===================================== */
+@keyframes animacionModal {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ===================================== */
+/* UTILIDADES */
+/* ===================================== */
+.oculto {
+    display: none;
+}
+
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+@media screen and (max-width: 1024px) {
+    .barra-lateral {
+        width: 220px;
+    }
+    .encabezado-panel {
+        font-size: 2rem;
+    }
+    .mensaje-vacio {
+        font-size: 1.5rem;
+    }
+}
+
+/* ===================================== */
+/* RESPONSIVE MOBILE */
+/* ===================================== */
+@media screen and (max-width: 768px) {
+    .contenedor {
+        flex-direction: column;
+    }
+    .barra-lateral {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+    .menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .item-menu {
+        width: 45%;
+    }
+    .contenido-principal {
+        padding: 15px;
+    }
+    .titulo-principal {
+        font-size: 2rem;
+    }
+    .contenedor-pasos {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .linea-pasos {
+        display: none;
+    }
+    .encabezado-panel {
+        font-size: 1.5rem;
+    }
+    .mensaje-vacio {
+        font-size: 1.2rem;
+    }
+    .botones-inferiores {
+        flex-direction: column;
+        align-items: center;
+    }
+    .boton-regresar,
+    .boton-siguiente {
+        width: 90%;
+    }
+    .tarjeta-pregunta {
+        width: 90%;
+        transform: translateY(-80px);
+    }
+    .modal-personalizado {
+        transform: translate(0px, 0px);
+        padding: 25px;
+    }
+    .modal-personalizado p {
+        font-size: 1.2rem;
+    }
+    .boton-modal {
+        width: 140px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    .boton-agregar.boton-activo {
+        width: 140px;
+        height: 60px;
+        right: 20px;
+        bottom: 20px;
+    }
+}
+
+/* ===================================== */
+/* MENSAJE ERROR */
+/* ===================================== */
+.mensaje-error {
+    position: absolute;
+    bottom: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #F5C392;
+    color: #000;
+    padding: 15px 40px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    min-width: 500px;
+    text-align: center;
+    animation: desvanecerEntrada 0.3s ease;
+}
+
+@keyframes desvanecerEntrada {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0px);
+    }
+}
+
+/* ===================================== */
+/* TARJETA GUARDADA */
+/* ===================================== */
+.tarjeta-pregunta.guardado {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.contenido-pregunta-guardada {
+    max-width: 75%;
+}
+
+.titulo-pregunta-guardada {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.texto-pregunta-guardada {
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.editar-pregunta {
+    position: absolute;
+    top: -5px;
+    right: 40px;
+    cursor: pointer;
+    font-size: 1.4rem;
+}
+
+.cerrar-guardado {
+    top: -5px;
+    right: 15px;
+}
+
+/* ===================================== */
+/* ESTADO VACÍO */
+/* ===================================== */
+.estado-vacio {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+/* ===================================== */
+/* BOTONES DE ELIMINAR */
+/* ===================================== */
+.botones-eliminar {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.boton-cancelar-eliminar,
+.boton-confirmar-eliminar {
+    width: 180px;
+    height: 60px;
+    border-radius: 20px;
+    border: 3px solid black;
+    background-color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* ===================================== */
+/* MENSAJE DE ÉXITO */
+/* ===================================== */
+.mensaje-exito {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #9EF279;
+    color: black;
+    padding: 20px 50px;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    min-width: 700px;
+    text-align: center;
+    animation: desvanecerEntrada 0.3s ease;
+    z-index: 999;
+}
+
+/* Ocultar botones de acción cuando hay una tarjeta en edición */
+.tarjeta-pregunta.guardado.acciones-ocultas .editar-pregunta,
+.tarjeta-pregunta.guardado.acciones-ocultas .cerrar-guardado {
+    display: none;
+}
