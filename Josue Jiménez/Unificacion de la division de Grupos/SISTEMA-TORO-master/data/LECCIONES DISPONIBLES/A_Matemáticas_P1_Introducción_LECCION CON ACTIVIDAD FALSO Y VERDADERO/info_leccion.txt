@@ -1,0 +1,51 @@
+=== [ENTIDAD: PROFESOR] ===
+NOMBRE_COMPLETO: JOSUÉ APELLIDO
+
+=== [ENTIDAD: LECCIÓN] ===
+ID_LECCION: L-007
+TITULO: LECCION CON ACTIVIDAD FALSO Y VERDADERO
+TEMA: Introducción
+PARCIAL: 1
+MATERIA: Matemáticas
+GRUPO: A
+
+--- [RELACIÓN: INCORPORA -> CONTENIDO MULTIMEDIA] ---
+CONTENIDO_1: audio1.mp3 | Tipo: Audio | Ruta: audio1.mp3
+CONTENIDO_2: pag25.png | Tipo: Imagen | Ruta: pag25.png
+CONTENIDO_3: pag26.png | Tipo: Imagen | Ruta: pag26.png
+CONTENIDO_4: Unidad_1_-_Hardware.pdf | Tipo: PDF | Ruta: Unidad_1_-_Hardware.pdf
+CONTENIDO_5: video1.mp4 | Tipo: Video | Ruta: video1.mp4
+
+=== [ENTIDAD: ACTIVIDAD] ===
+ID_ACTIVIDAD: ACT-021
+NOMBRE_ACTIVIDAD: FALSO Y VERDADERO ACTIVIDAD A IMPLEMENTAR
+INTENTOS_MAX: 3
+TIEMPO_ESTIMADO: 34 minutos
+FECHA_VENCIMIENTO: 2026-05-29
+
+--- [RELACIÓN: GENERA <- PLANTILLA: VERDADERO O FALSO] ---
+
+PREGUNTA_1:
+ENUNCIADO: El camarón es un alimento
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_2:
+ENUNCIADO: Las rocas son un alimento
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Falso
+
+PREGUNTA_3:
+ENUNCIADO: Los mosquitos tienen un bajo contenido nutricional
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Falso
+
+PREGUNTA_4:
+ENUNCIADO: Las hojas de plátano pueden envolver tamales
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero
+
+PREGUNTA_5:
+ENUNCIADO: Los esquites tienen elote
+TIPO: VERDADERO_FALSO
+RESPUESTA_CORRECTA: Verdadero

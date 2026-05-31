@@ -1,0 +1,38 @@
+ID_ACTIVIDAD: ACT-023
+FECHA: 28/05/2026
+NOMBRE: OPCION MULTIPLE ACTIVIDAD A IMPLEMENTAR
+LECCION: General
+INTENTOS: 3
+TIEMPO: 67 minutos
+PONDERACION: 12
+FECHA_VENCIMIENTO: 2026-05-29
+ID_PLANTILLA: P003
+---
+
+Pregunta 1: Aplicación para navegar en internet
+Opciones: Chrome | Whatsapp | X | Facebook
+Respuesta correcta: A
+
+Pregunta 2: Aplicación para hacer tareas
+Opciones: Claro video | Google meets | T.O.R.O. | Telegram
+Respuesta correcta: C
+
+Pregunta 3: Red social llamada Tiktok
+Opciones: Instagram | Tiktok | Facebook | Whatsapp
+Respuesta correcta: B
+
+Pregunta 4: Aplicación para escanear archivos
+Opciones: Banorte app | Youtube | Canva | Camscanner
+Respuesta correcta: D
+
+Pregunta 5: Aplicación para comprar cosas
+Opciones: Youtube | Netflix | Mercado Libre | Notas
+Respuesta correcta: C
+
+@@@ Métricas: 
+tipo:opcion-multiple
+nombre:OPCION MULTIPLE ACTIVIDAD A IMPLEMENTAR
+intentos:3
+tiempo:67
+fecha-vencimiento:2026-05-29
+ponderacion:12

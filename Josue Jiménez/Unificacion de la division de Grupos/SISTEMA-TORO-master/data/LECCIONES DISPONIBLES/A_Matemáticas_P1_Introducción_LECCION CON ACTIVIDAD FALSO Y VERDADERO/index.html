@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SISTEMA TORO - Falso / Verdadero</title>
+    <style>
+        :root { --primary: #008080; --bg: #f4f4f9; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; margin: 0; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #ddd; }
+        .tab { padding: 10px 20px; cursor: pointer; background: #eee; border-radius: 8px 8px 0 0; margin-right: 5px; font-weight: bold; }
+        .tab.active { background: var(--primary); color: white; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .book-pages { display: flex; flex-direction: column; gap: 30px; background: #f8f8f8; padding: 20px; border-radius: 8px; overflow-y: auto; }
+        /* Estilos para multimedia */
+        .book-pages img, .book-pages video, .book-pages iframe, .book-pages audio {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .book-pages iframe {
+            height: 70vh;
+            min-height: 400px;
+            border: 1px solid #ccc;
+        }
+        .book-pages audio {
+            display: block;
+            margin: 0.5rem 0;
+            background: #f0f0f0;
+            border-radius: 30px;
+            height: 54px;
+        }
+        .question-card { border: 1px solid #ddd; padding: 20px; margin: 15px 0; border-radius: 8px; background: #fff; }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px; width: 100%; cursor: pointer; border-radius: 5px; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>LECCION CON ACTIVIDAD FALSO Y VERDADERO</h1>
+        <p><strong>Tema:</strong> Introducción</p>
+    </header>
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('lectura')">LECTURA Y MULTIMEDIA</div>
+        <div class="tab" onclick="showTab('quiz')">ACTIVIDAD</div>
+    </div>
+    <div id="lectura" class="section active">
+        <h3>Lee y revisa el siguiente material antes de responder:</h3>
+        <div class="book-pages">
+            <audio controls><source src="audio1.mp3" type="audio/mp3">Tu navegador no soporta audio.</audio>
+<img src="pag25.png" alt="pag25.png">
+<img src="pag26.png" alt="pag26.png">
+<iframe src="Unidad_1_-_Hardware.pdf" title="Documento PDF"></iframe>
+<video controls><source src="video1.mp4" type="video/mp4">Tu navegador no soporta video.</video>
+        </div>
+    </div>
+    <div id="quiz" class="section">
+        <form id="quizForm">
+            
+        <div class="question-card">
+            <h3>1. El camarón es un alimento</h3>
+            <label><input type="radio" name="p1" value="v"> Verdadero</label><br><br>
+            <label><input type="radio" name="p1" value="f"> Falso</label>
+        </div>
+        
+        <div class="question-card">
+            <h3>2. Las rocas son un alimento</h3>
+            <label><input type="radio" name="p2" value="v"> Verdadero</label><br><br>
+            <label><input type="radio" name="p2" value="f"> Falso</label>
+        </div>
+        
+        <div class="question-card">
+            <h3>3. Los mosquitos tienen un bajo contenido nutricional</h3>
+            <label><input type="radio" name="p3" value="v"> Verdadero</label><br><br>
+            <label><input type="radio" name="p3" value="f"> Falso</label>
+        </div>
+        
+        <div class="question-card">
+            <h3>4. Las hojas de plátano pueden envolver tamales</h3>
+            <label><input type="radio" name="p4" value="v"> Verdadero</label><br><br>
+            <label><input type="radio" name="p4" value="f"> Falso</label>
+        </div>
+        
+        <div class="question-card">
+            <h3>5. Los esquites tienen elote</h3>
+            <label><input type="radio" name="p5" value="v"> Verdadero</label><br><br>
+            <label><input type="radio" name="p5" value="f"> Falso</label>
+        </div>
+        
+            <button type="button" class="btn" onclick="alert('Calificación guardada en el sistema.')">Finalizar Actividad</button>
+        </form>
+    </div>
+</div>
+<script>
+    function showTab(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+</script>
+</body>
+</html>

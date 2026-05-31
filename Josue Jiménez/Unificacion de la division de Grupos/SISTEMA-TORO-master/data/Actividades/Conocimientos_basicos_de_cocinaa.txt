@@ -1,0 +1,33 @@
+ID_ACTIVIDAD: ACT-012
+FECHA: 24/05/2026
+NOMBRE: Conocimientos básicos de cocina
+LECCION: General
+INTENTOS: 3
+TIEMPO: 34 minutos
+PONDERACION: 12
+FECHA_VENCIMIENTO: 2026-05-25
+ID_PLANTILLA: P002
+---
+
+Pregunta 1: El mole dulce está hecho a base de algodón de azúcar
+Respuesta: Falso
+
+Pregunta 2: El pan de yema se llama así por estar hecho con la yema de los dedos
+Respuesta: Falso
+
+Pregunta 3: El esquite está hecho a base de elote, mayonesa y queso
+Respuesta: Verdadero
+
+Pregunta 4: El ingrediente principal de las marquesitas es el cacao
+Respuesta: Falso
+
+Pregunta 5: Las tortillas de mano se llaman así por ser hechas a mano
+Respuesta: Verdadero
+
+@@@ Métricas: 
+tipo:falso-verdadero
+nombre:Conocimientos básicos de gastronomía
+intentos:3
+tiempo:34
+fecha-vencimiento:2026-05-25
+ponderacion:12

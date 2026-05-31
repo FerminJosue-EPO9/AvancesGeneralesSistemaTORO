@@ -1,0 +1,42 @@
+ID_ACTIVIDAD: ACT-020
+FECHA: 24/05/2026
+NOMBRE: Cosas que todo estudiante debe tenere
+LECCION: General
+INTENTOS: 3
+TIEMPO: 45 minutos
+PONDERACION: 12
+FECHA_VENCIMIENTO: 2026-05-25
+ID_PLANTILLA: P004
+---
+
+const descripciones = [
+            "Aparato para realizar operaciones matemáticas",
+            "Artefacto para escribir",
+            "Artefacto para corregir errores escritos con granito",
+            "Artefacto para corregir errores escritos con pluma",
+            "Artefacto para escribir con granito o tinta"
+        ];
+
+const palabras = [
+            "Calculadora",
+            "Lápiz",
+            "Borrador",
+            "Corrector",
+            "Cuaderno"
+        ];
+
+const respuestas = {
+            "Aparato para realizar operaciones matemáticas": "Calculadora",
+            "Artefacto para escribir": "Lápiz",
+            "Artefacto para corregir errores escritos con granito": "Borrador",
+            "Artefacto para corregir errores escritos con pluma": "Corrector",
+            "Artefacto para escribir con granito o tinta": "Cuaderno"
+        };
+
+@@@ Métricas: 
+tipo:sopa-letras
+nombre:Cosas que todo estudiante debe tenere
+intentos:3
+tiempo:45
+fecha-vencimiento:2026-05-25
+ponderacion:12
