@@ -4,10 +4,9 @@ import os
 import re
 import shutil
 import json
-
+from werkzeug.utils import secure_filename
 import base64
 import zipfile
-from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'toro_secret_key_2026'
@@ -260,7 +259,7 @@ def login():
 @app.route('/formatear_actividades')
 def formatear_actividades():
     ruta_origen = os.path.join(app.root_path, 'data', 'actividades')
-    ruta_destino = os.path.join(app.root_path, 'data', 'actividades-formateadas')
+    ruta_destino = os.path.join(app.root_path, 'data', 'LECCIONES-LISTAS-PARA-ENVIAR')
     if not os.path.exists(ruta_destino):
         os.makedirs(ruta_destino)
     log_errores = []
@@ -337,7 +336,7 @@ def formatear_actividades():
     if log_errores:
         return jsonify({'status': 'Con Errores', 'procesados': procesados, 'errores': log_errores})
     else:
-        return f"¡Éxito! {procesados} archivos convertidos correctamente en data/actividades-formateadas"
+        return f"¡Éxito! {procesados} archivos convertidos correctamente en data/LECCIONES-LISTAS-PARA-ENVIAR"
 
 from gestor_archivos import obtener_lista_lecciones, crear_estructura_leccion
 
@@ -538,37 +537,48 @@ def subir_leccion():
                 f.write(html_final)
             print(f"✅ HTML generado en {ruta_html}")
 
-            # === OFUSCAR Y EMPAQUETAR EN .ZIP ===
+                                    # === OFUSCAR Y EMPAQUETAR EN .ZIP ===
             try:
-
                 def ofuscar_reporte(texto: str) -> str:
                     firma = str(len(texto) * 77)
                     texto_con_firma = texto + "||" + firma
                     texto_modificado = "".join(chr(ord(c) + 3) for c in texto_con_firma)
                     encoded_bytes = texto_modificado.encode("utf-8")
                     return base64.b64encode(encoded_bytes).decode("ascii")
-
-                #Leer el info_leccion.txt recién creado.
+                
+                # Leer el info_leccion.txt recién creado
                 with open(ruta_metadatos, 'r', encoding='utf-8') as f:
                     texto_original = f.read()
-
                 texto_ofuscado = ofuscar_reporte(texto_original)
-
+                
                 # Carpeta destino: data/Actividades-Formateadas
-                ruta_actividades_formateadas = os.path.join(app.root_path, 'data', 'Actividades-Formateadas')
+                ruta_actividades_formateadas = os.path.join(app.root_path, 'data', 'LECCIONES-LISTAS-PARA-ENVIAR')
                 os.makedirs(ruta_actividades_formateadas, exist_ok=True)
-
+                
                 # Nombre del zip = nombre de la carpeta de la lección
                 nombre_carpeta_leccion = os.path.basename(ruta_destino)
                 nombre_zip = nombre_carpeta_leccion + ".zip"
                 ruta_zip = os.path.join(ruta_actividades_formateadas, nombre_zip)
-
+                
                 with zipfile.ZipFile(ruta_zip, "w", zipfile.ZIP_DEFLATED) as zf:
-                    zf.writestr("info_leccion.txt", texto_ofuscado) # .txt ofuscado en memoria
-                    zf.write(ruta_html, "index.html")               # index.html ya generado
-
-            except Exception:
-                pass  # El ZIP falló pero la lección se creó correctamente
+                    # 1. Agregar info_leccion.txt ofuscado
+                    zf.writestr("info_leccion.txt", texto_ofuscado)
+                    
+                    # 2. Agregar index.html
+                    zf.write(ruta_html, "index.html")
+                    
+                    # 3. Agregar TODOS los archivos de la carpeta de la lección
+                    for archivo in os.listdir(ruta_destino):
+                        ruta_completa_archivo = os.path.join(ruta_destino, archivo)
+                        if os.path.isfile(ruta_completa_archivo):
+                            # Evitar volver a agregar el info_leccion.txt original (ya lo tenemos ofuscado) y index.html (ya agregado)
+                            if archivo not in ["info_leccion.txt", "index.html"]:
+                                zf.write(ruta_completa_archivo, archivo)
+                    
+                print(f"✅ ZIP ofuscado generado con todos los archivos en {ruta_zip}")
+            except Exception as e:
+                print(f"⚠️ Error al crear el ZIP: {e}")
+                # No interrumpimos la creación de la lección si falla el zip
 
             return redirect(url_for('vista_contenido'))
         except Exception as e:
