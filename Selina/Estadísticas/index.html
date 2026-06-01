@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container">
+        
+<!-- SIDEBAR -->
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="img/logo_cbta_blanco.png" class="logo-sidebar">
+            <p>
+                ¡Bienvenido,<br>
+                Profesor José Luis!
+            </p>
+        </div>
+
+        <nav class="menu">
+            <a href="#" class="menu-item">
+                <img src="img/grupo.png" class="menu-icon">
+                <span>Grupos</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <img src="img/contenido.png" class="menu-icon">
+                <span>Contenido</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <img src="img/calificaciones.png" class="menu-icon">
+                <span>Calificaciones</span>
+            </a>
+
+            <a href="#" class="menu-item active">
+                <img src="img/estadisticas.png" class="menu-icon">
+                <span>Estadísticas</span>
+            </a>
+        </nav>
+    </aside>
+
+
+        <main class="main-content">
+            
+            <header class="page-header">
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="breadcrumb-link">Estadísticas</span>
+                </div>
+                <h1 class="page-title">Estadísticas</h1>
+            </header>
+
+            <div id="groups-view" class="content-view">
+                <div class="card-container">
+                    <div class="card-header">
+                        <h2>Grupos Existentes</h2>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="scroll-list">
+                            
+                            <div class="group-item" onclick="seleccionarGrupo('401-A', '4to Semestre')">
+                                <span class="group-id">401-A</span>
+                                <span class="group-description">4to Semestre</span>
+                            </div>
+
+                            <div class="group-item" onclick="seleccionarGrupo('604-B', '6to Semestre')">
+                                <span class="group-id">604-B</span>
+                                <span class="group-description">6to Semestre</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selection-view" class="content-view" style="display: none;">
+                <div class="selection-container">
+                    <h2 class="section-title">Elige una opción para ver estadísticas:</h2>
+                    
+                    <div class="cards-grid">
+                        <div class="option-card" onclick="cargarGrafico('actividad')">
+                            <img src="img/lecciones.png" alt="Lecciones" class="card-background-image">
+                            <h3>Lecciones</h3>
+                        </div>
+
+                        <div class="option-card" onclick="cargarGrafico('alumno')">
+                            <img src="img/alumnos.png" alt="Alumnos" class="card-background-image">
+                            <h3>Alumnos</h3>
+                        </div>
+
+                        <div class="option-card" onclick="cargarGrafico('grupo')">
+                            <img src="img/grupos.png" alt="Grupos" class="card-background-image">
+                            <h3>Grupos</h3>
+                        </div>
+                    </div>
+                </div>
+
+                    <button
+                        onclick="irInicio()"
+                        class="secondary-back-button">
+                        Atrás
+                    </button>
+            </div>
+
+            <div id="students-view" class="content-view" style="display: none;">
+                <div class="content-container">
+                    <h2 class="section-title">Seleccione un alumno para ver las estadísticas:</h2>
+                    
+                    <div class="students-grid">
+                        <button class="student-button" onclick="verGraficoAlumno('Selina del Mar Cruz Jacinto')">
+                            Selina del Mar Cruz Jacinto
+                        </button>
+                        <button class="student-button" onclick="verGraficoAlumno('Angel Jharamy Cruz Licea')">
+                            Angel Jharamy Cruz Licea
+                        </button>
+                        <button class="student-button" onclick="verGraficoAlumno('Genesis Daniela Hernandez Vilchis')">
+                            Genesis Daniela Hernandez Vilchis
+                        </button>
+                        <button class="student-button" onclick="verGraficoAlumno('Josue Jimenez Fermin')">
+                            Josue Jimenez Fermin
+                        </button>
+                        <button class="student-button" onclick="verGraficoAlumno('Denilson Alexis Rosado Cortez')">
+                            Denilson Alexis Rosado Cortez
+                        </button>
+                        <button class="student-button" onclick="verGraficoAlumno('Eduardo Garcia Medina')">
+                            Eduardo Garcia Medina
+                        </button>
+                        <button class="student-button" onclick="verGraficoAlumno('Edna Abigail Navarro Fuentes')">
+                            Edna Abigail Navarro Fuentes
+                        </button>
+                        <button class="student-button" onclick="verGraficoAlumno('Josue Gibran Orozco Hernandez')">
+                            Josue Gibran Orozco Hernandez
+                        </button>
+                    </div>
+                    
+                    <button onclick="regresarASeleccion()" class="secondary-back-button">Atrás</button>
+                </div>
+            </div>
+
+            <div id="activities-view" class="content-view" style="display: none;">
+                <div class="content-container">
+                    <h2 class="section-title">Seleccione una actividad para ver las estadísticas:</h2>
+
+                    <table class="activities-table">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Tema</th>
+                                <th>Fecha de asignación</th>
+                                <th>Ponderación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr onclick="verGraficoActividad('Crucigrama', 'Condicionales')">
+                                <td>Crucigrama</td>
+                                <td>Condicionales</td>
+                                <td>3 / Marzo / 2026</td>
+                                <td>10 pts</td>
+                            </tr>
+                            <tr onclick="verGraficoActividad('Sopa de letras', 'Archivos')">
+                                <td>Sopa de letras</td>
+                                <td>Archivos</td>
+                                <td>24 / Enero / 2026</td>
+                                <td>15 pts</td>
+                            </tr>
+                            <tr onclick="verGraficoActividad('Cuestionario', 'Funciones')">
+                                <td>Cuestionario de opción múltiple</td>
+                                <td>Funciones</td>
+                                <td>10 / Enero / 2026</td>
+                                <td>5 pts</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button onclick="regresarASeleccion()" class="secondary-back-button">Atrás</button>
+                </div>
+            </div>
+
+            <div id="charts-view" class="content-view" style="display: none;">
+                <div class="chart-container">
+                    
+                    <div class="chart-info">
+                        <h3 id="chart-group">Grupo 204-A</h3>
+                        
+                        <p>
+                            <span class="label-bold">Materia:</span> 
+                            <span id="chart-subject">Programación estructurada</span>
+                        </p>
+                        
+                        <p>
+                            <span class="label-bold" id="chart-label">Alumno:</span> 
+                            <span id="chart-detail">Nombre del Alumno</span>
+                        </p>
+                    </div>
+
+                    <div class="chart-area">
+                        <canvas id="statisticsChart"></canvas>
+                    </div>
+
+                    <button onclick="regresar()" class="secondary-back-button">
+                        Atrás
+                    </button>
+                </div>
+            </div>
+
+            </main>
+            </div>
+
+            <script src="script.js"></script>
+            </body>
+            </html>

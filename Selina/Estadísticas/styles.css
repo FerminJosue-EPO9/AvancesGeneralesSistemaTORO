@@ -1,0 +1,455 @@
+/*VARIABLES GLOBALES*/
+@font-face {
+    font-family: 'Inder';
+    src: url('fonts/Inder-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+:root {
+    --azul-orion: #052672;
+    --verde-c: #3E8E41; 
+    --texto-oscuro: #002b74; 
+
+    /* Colores de estructura */
+    --gris-fondo: #f8f9fa;   
+    --borde-input: #e0e0e0;  
+}
+
+/* selecciona todos los elementos HTML de la página y los resetea o limpia */
+* {
+    margin: 0; /*Es el espacio externo*/
+    padding: 0; /*Es el espacio interno o relleno*/
+    box-sizing: border-box; 
+    font-family:'Inder', sans-serif;
+}
+
+body {
+    background-color: var(--gris-fondo);
+    height: 100vh;/*Viewport Heigth para que ocupe toda la ltura de la ventana*/
+    overflow: hidden; /*oculta la barra de desplazar si es muy grande el contenido*/
+}
+
+/*Sidebar y contenid*/
+.app-container {
+    display: flex; 
+    height: 100%;  /*Para que ocupe toda la altura disponible */
+}
+
+.main-content{
+    flex-grow: 1;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px;
+}
+/* =========================================
+   SIDEBAR ESTILO GLOBAL
+   ========================================= */
+
+/* sidebar.css */
+.sidebar {
+    position: fixed; /* Fija la barra en la pantalla */
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(180deg, #161C5F 0%, #203982 56%, #045FC8 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    overflow-y: auto; /* Permite scroll dentro de la sidebar si hay muchos items */
+}
+/* CABECERA */
+
+.sidebar-header{
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 0 15px;
+}
+
+.logo-sidebar {
+    width: 80px;
+    margin-bottom: 15px;
+}
+
+.sidebar-header p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: white;
+}
+
+/* =========================================
+   SIDEBAR MENU
+   ========================================= */
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s;
+    font-size: 1rem;
+}
+
+.menu-item:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.menu-item.active {
+    background-color: #33743A;
+    margin: 0 15px;
+    border-radius: 8px;
+    border-left: 3px solid white;
+}
+
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+/* Encabezado */
+.page-header {
+    margin-bottom: 20px;
+}
+
+/*Estadísticas > Grupo 401... */
+.breadcrumb {
+    font-size: 0.9rem;
+    color: var(--texto-oscuro);
+    margin-bottom: 5px;
+    cursor: pointer; /* Manita al pasar el mouse */
+    font-weight: 500;
+}
+
+.breadcrumb-link{
+    color: inherit;
+    cursor: pointer;
+}
+
+.page-title {
+    color: var(--azul-orion);
+    text-align: center;
+    font-size: 24px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-top:30px;
+}
+
+/* Contenedor general */
+.content-view {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /*Alinea al top*/
+    padding-top: 50px;
+    width: 100%;
+}
+
+/* 7. TARJETAS */
+.card-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /*eje x, eje y, difuminado y color*/
+    border: 1px solid #f0f0f0;
+    width: 100%;
+    max-width: 900px; 
+    height: 70vh; /* 70% de la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /*para que lo elementos de andentro de la tarj respeten el borde curvo*/
+}
+
+.card-header{
+    background-color: var(--azul-orion);
+    color: white;
+    padding: 20px 30px;
+}
+
+/*scroll para listas largas */
+.scroll-list {
+    padding: 20px;
+    overflow-y: auto; /*barra de scroll  cuando es necesario, cuando la lista es larga*/
+    height: 100%; /*ocupa el resto de la tarjeta */
+}
+
+/* 8. GRUPOS DE LA LISTA */
+.group-item {
+    background-color: white;
+    border: 1px solid var(--borde-input);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px; /*Separación entre tarjetas de grupos */
+    display: flex; /*Para poner ID y Descripción en línea */
+    gap: 20px; /*Espacio entre el ID del grupo y la descripción */
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.group-item:hover {
+    border-color: var(--verde-c); /* El borde se pinta de verde */
+    background-color: #fafbfc; 
+    transform: translateY(-2px); /*mueve el elemento poquito hacia arriba*/
+}
+
+.group-id {
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    font-size: 1.1rem;
+}
+
+.group-description {
+    color: #666;
+}
+
+/* 9. TARJETAS DE SELECCIÓN */
+.content-container {
+    text-align: center;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.selection-container {
+    text-align: center;
+    margin-top: 70px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+
+.section-title {
+    color: var(--azul-orion);
+    margin-bottom: 40px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.cards-grid {
+    display: flex;
+    justify-content: center; /*Centra las tarjetas en el medio */
+    gap: 30px; /*Espacio entre tarjetas */
+    flex-wrap: wrap; /*Si la pantalla es chica, baja las tarjetas a la siguiente línea */
+}
+
+.option-card {
+    width: 280px;
+    height: 180px;
+    border-radius: 12px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.option-card{
+    position: relative;
+    overflow: hidden;
+}
+
+.card-background-image{
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: 1;
+}
+
+/* Capa oscura para mejorar la lectura */
+
+.option-card::before{
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(5, 38, 114, 0.45);
+
+    z-index: 2;
+}
+
+/* Texto por encima de la imagen */
+
+.option-card h3,
+.option-card p{
+    position: relative;
+    z-index: 3;
+}
+
+.option-card h3{
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.option-card p{
+    font-size: 0.95rem;
+}
+
+.option-card:hover {
+    transform: translateY(-5px); /* Sube 5px */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/*para colores de fondo */
+.color-azul { background-color: #5c6bc0; }
+.color-morado { background-color: #3949ab; }
+.color-verde { background-color: var(--verde-c); }
+
+.card-icon { font-size: 2.5rem; margin-bottom: 15px; }
+
+/* 10. BOTONES Y TABLAS INTERMEDIAS */
+.students-grid {
+    display: grid; /*2 columnas*/
+    grid-template-columns: repeat(2, 1fr); /*fracción del espacio*/
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.student-button {
+    background-color: #fff;
+    border: 1px solid var(--borde-input);
+    padding: 20px;
+    font-size: 1rem;
+    color: var(--texto-oscuro);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.student-button:hover {
+    background-color: #f0f4f8;
+    border-color: var(--azul-orion);
+}
+
+/* --- TABLA DE ACTIVIDADES --- */
+.activities-table {
+    width: 100%;
+    border-collapse: collapse; /* Colapsa los bordes dobles en uno solo */
+    margin-bottom: 30px;
+}
+
+.activities-table th {
+    text-align: center;
+    padding: 15px;
+    color: var(--azul-orion);
+    font-weight: 600;
+    border-bottom: 2px solid var(--borde-input); /*línea bajo los títulos */
+}
+
+.activities-table tbody tr {
+    background-color: white;
+    border-bottom: 1px solid var(--borde-input); /*línea entre filas */
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.activities-table td {
+    padding: 18px;
+    color: #444;
+}
+
+.activities-table tbody tr:hover {
+    background-color: #eef2f7;
+}
+
+
+/*11. CONTENEDOR DEL GRÁFICO con librería CHART.JS */
+.chart-container {
+    width: 90%;
+    max-width: 1000px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: none;
+}
+
+.chart-area {
+    position: relative; /*para que Chart.js se ajuste al tamaño */
+    height: 320px; /*Altura del gráfico */
+    width: 100%;
+}
+
+.back-button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #0D2C54;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.secondary-back-button{
+    position: fixed;
+    right: 70px;
+    bottom: 50px;
+    width: 110px;
+    height: 38px;
+    background: white;
+    border: 2px solid #222;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    z-index: 999;
+}
+
+.secondary-back-button:hover{
+    background-color: #f2f2f2;
+}
+
+.chart-info {
+    text-align: left; /* Alineado a la izquierda como en la foto */
+    margin-bottom: 30px;
+    padding-left: 10px; /* Un pequeño margen interno */
+    color: #000; /* Texto negro */
+}
+
+.chart-info h3 {
+    font-size: 1.2rem;
+    font-weight: 700; /* Grupo en negrita fuerte */
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.chart-info p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Clase para las palabras "Materia:" y "Alumno:" */
+.label-bold {
+    font-weight: 700;
+    color: #000;
+    margin-right: 5px;
+}
