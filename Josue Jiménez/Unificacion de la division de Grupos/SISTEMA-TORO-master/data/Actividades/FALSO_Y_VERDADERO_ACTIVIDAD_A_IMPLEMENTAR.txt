@@ -1,0 +1,33 @@
+ID_ACTIVIDAD: ACT-021
+FECHA: 28/05/2026
+NOMBRE: FALSO Y VERDADERO ACTIVIDAD A IMPLEMENTAR
+LECCION: General
+INTENTOS: 3
+TIEMPO: 34 minutos
+PONDERACION: 12
+FECHA_VENCIMIENTO: 2026-05-29
+ID_PLANTILLA: P002
+---
+
+Pregunta 1: El camarón es un alimento
+Respuesta: Verdadero
+
+Pregunta 2: Las rocas son un alimento
+Respuesta: Falso
+
+Pregunta 3: Los mosquitos tienen un bajo contenido nutricional
+Respuesta: Falso
+
+Pregunta 4: Las hojas de plátano pueden envolver tamales
+Respuesta: Verdadero
+
+Pregunta 5: Los esquites tienen elote
+Respuesta: Verdadero
+
+@@@ Métricas: 
+tipo:falso-verdadero
+nombre:FALSO Y VERDADERO ACTIVIDAD A IMPLEMENTAR
+intentos:3
+tiempo:34
+fecha-vencimiento:2026-05-29
+ponderacion:12

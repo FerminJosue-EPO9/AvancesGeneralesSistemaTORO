@@ -1,0 +1,38 @@
+ID_ACTIVIDAD: ACT-013
+FECHA: 24/05/2026
+NOMBRE: Electrodomésticos y sus funcionalidades
+LECCION: General
+INTENTOS: 3
+TIEMPO: 23 minutos
+PONDERACION: 12
+FECHA_VENCIMIENTO: 2026-05-25
+ID_PLANTILLA: P003
+---
+
+Pregunta 1: ¿Electrodoméstico para planchar ropa?
+Opciones: Plancha de ropa | Molinillo | Molcajete | Licuadora
+Respuesta correcta: A
+
+Pregunta 2: ¿Electrodoméstico para triturar cosas en granos finos?
+Opciones: Estufa | Licuadora | Molinillo eléctrico | Plancha de ropa
+Respuesta correcta: C
+
+Pregunta 3: ¿Electrodoméstico para lavar ropa?
+Opciones: Secadora | Lavadora | Lavavajillas
+Respuesta correcta: B
+
+Pregunta 4: ¿Electrodoméstico para lavar trastes?
+Opciones: Calculadora | Secadora de ropa | Ventilador | Lavavajillas
+Respuesta correcta: D
+
+Pregunta 5: ¿Electrodoméstico para emitir luz?
+Opciones: Focos | Planchas de ropa | Lavadora | Ventilador
+Respuesta correcta: A
+
+@@@ Métricas: 
+tipo:opcion-multiple
+nombre:Electrodomésticos y sus funcionalidades
+intentos:3
+tiempo:23
+fecha-vencimiento:2026-05-25
+ponderacion:12

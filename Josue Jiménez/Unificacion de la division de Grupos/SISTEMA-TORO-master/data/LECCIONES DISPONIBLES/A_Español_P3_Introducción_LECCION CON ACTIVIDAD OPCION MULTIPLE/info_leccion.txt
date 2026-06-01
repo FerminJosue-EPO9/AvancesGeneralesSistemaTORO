@@ -1,0 +1,51 @@
+=== [ENTIDAD: PROFESOR] ===
+NOMBRE_COMPLETO: JOSUÉ APELLIDO
+
+=== [ENTIDAD: LECCIÓN] ===
+ID_LECCION: L-009
+TITULO: LECCION CON ACTIVIDAD OPCION MULTIPLE
+TEMA: Introducción
+PARCIAL: 3
+MATERIA: Español
+GRUPO: A
+
+--- [RELACIÓN: INCORPORA -> CONTENIDO MULTIMEDIA] ---
+CONTENIDO_1: audio1.mp3 | Tipo: Audio | Ruta: audio1.mp3
+CONTENIDO_2: pag25.png | Tipo: Imagen | Ruta: pag25.png
+CONTENIDO_3: pag26.png | Tipo: Imagen | Ruta: pag26.png
+CONTENIDO_4: Unidad_1_-_Hardware.pdf | Tipo: PDF | Ruta: Unidad_1_-_Hardware.pdf
+CONTENIDO_5: video1.mp4 | Tipo: Video | Ruta: video1.mp4
+
+=== [ENTIDAD: ACTIVIDAD] ===
+ID_ACTIVIDAD: ACT-023
+NOMBRE_ACTIVIDAD: OPCION MULTIPLE ACTIVIDAD A IMPLEMENTAR
+INTENTOS_MAX: 3
+TIEMPO_ESTIMADO: 67 minutos
+FECHA_VENCIMIENTO: 2026-05-29
+
+--- [RELACIÓN: GENERA <- PLANTILLA: OPCIÓN MÚLTIPLE] ---
+
+PREGUNTA_1:
+ENUNCIADO: Aplicación para navegar en internet
+OPCIONES: Chrome | Whatsapp | X | Facebook
+RESPUESTA_CORRECTA: A
+
+PREGUNTA_2:
+ENUNCIADO: Aplicación para hacer tareas
+OPCIONES: Claro video | Google meets | T.O.R.O. | Telegram
+RESPUESTA_CORRECTA: C
+
+PREGUNTA_3:
+ENUNCIADO: Red social llamada Tiktok
+OPCIONES: Instagram | Tiktok | Facebook | Whatsapp
+RESPUESTA_CORRECTA: B
+
+PREGUNTA_4:
+ENUNCIADO: Aplicación para escanear archivos
+OPCIONES: Banorte app | Youtube | Canva | Camscanner
+RESPUESTA_CORRECTA: D
+
+PREGUNTA_5:
+ENUNCIADO: Aplicación para comprar cosas
+OPCIONES: Youtube | Netflix | Mercado Libre | Notas
+RESPUESTA_CORRECTA: C
