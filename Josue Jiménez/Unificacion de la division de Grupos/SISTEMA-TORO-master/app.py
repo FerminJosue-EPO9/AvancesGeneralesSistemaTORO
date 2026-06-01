@@ -4,6 +4,9 @@ import os
 import re
 import shutil
 import json
+
+import base64
+import zipfile
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -534,6 +537,38 @@ def subir_leccion():
             with open(ruta_html, 'w', encoding='utf-8') as f:
                 f.write(html_final)
             print(f"✅ HTML generado en {ruta_html}")
+
+            # === OFUSCAR Y EMPAQUETAR EN .ZIP ===
+            try:
+
+                def ofuscar_reporte(texto: str) -> str:
+                    firma = str(len(texto) * 77)
+                    texto_con_firma = texto + "||" + firma
+                    texto_modificado = "".join(chr(ord(c) + 3) for c in texto_con_firma)
+                    encoded_bytes = texto_modificado.encode("utf-8")
+                    return base64.b64encode(encoded_bytes).decode("ascii")
+
+                #Leer el info_leccion.txt recién creado.
+                with open(ruta_metadatos, 'r', encoding='utf-8') as f:
+                    texto_original = f.read()
+
+                texto_ofuscado = ofuscar_reporte(texto_original)
+
+                # Carpeta destino: data/Actividades-Formateadas
+                ruta_actividades_formateadas = os.path.join(app.root_path, 'data', 'Actividades-Formateadas')
+                os.makedirs(ruta_actividades_formateadas, exist_ok=True)
+
+                # Nombre del zip = nombre de la carpeta de la lección
+                nombre_carpeta_leccion = os.path.basename(ruta_destino)
+                nombre_zip = nombre_carpeta_leccion + ".zip"
+                ruta_zip = os.path.join(ruta_actividades_formateadas, nombre_zip)
+
+                with zipfile.ZipFile(ruta_zip, "w", zipfile.ZIP_DEFLATED) as zf:
+                    zf.writestr("info_leccion.txt", texto_ofuscado) # .txt ofuscado en memoria
+                    zf.write(ruta_html, "index.html")               # index.html ya generado
+
+            except Exception:
+                pass  # El ZIP falló pero la lección se creó correctamente
 
             return redirect(url_for('vista_contenido'))
         except Exception as e:
